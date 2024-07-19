@@ -8,6 +8,8 @@ import javafx.scene.layout.GridPane;
 import org.luubstar.lsdatabase.Utils.Notification;
 import org.luubstar.lsdatabase.Utils.Validation.ValidationWrap;
 import org.luubstar.lsdatabase.Utils.Validation.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,8 +34,8 @@ public class RecordatoriosController implements SidePanel {
     protected TextField input_Hora;
     @FXML
     protected TextField input_Minutos;
-
     Validator validator;
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //TODO: CAMBIAR ESTO A MI CLASE DE FORMULARIOS
@@ -68,9 +70,8 @@ public class RecordatoriosController implements SidePanel {
         d.setTime(d.getTime() + (h* 60L + m) * 60000);
 
         Notification n = new Notification(input_Titulo.getText(), input_Mensaje.getText(), d);
-        System.out.println("Notificación creada");
-        try{n.SendNotification();}
-        catch (IOException e){System.out.println("Error creando la notificacion");}
+        logger.info("Notificación creada");
+        n.SendNotification();
     }
 
     public void startValidators(){

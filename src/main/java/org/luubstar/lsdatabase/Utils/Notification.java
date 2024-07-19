@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,12 +21,9 @@ public class Notification{
     Date fecha;
 
     public static void main(String[] args){
-        try{
           Notification n = new Notification("Titulo", "Mensaje", new Date(System.currentTimeMillis() + 60000));
           n.SendNotification();
-          System.out.println("Notificación preparada para dentro de 1 minutos");
-        }
-        catch(IOException e){logger.error("Error en la creación de la notificación ", e);}
+          logger.info("Notificación preparada para dentro de 1 minuto");
     }
 
     public Notification(String title, String message, Date fecha){
@@ -34,23 +32,23 @@ public class Notification{
         this.fecha = fecha;
     }
 
-    public void SendNotification() throws IOException{
-
-        String os = System.getProperty("os.name");
-        if (os.contains("Linux") || os.contains("Mac")){
-          DateFormat dateFormat = new SimpleDateFormat("HH:mm M/dd/yyyy");
-          String strDate = dateFormat.format(fecha);
-          ProcessBuilder builder = new ProcessBuilder(
-              "bash", "-c",
-              "echo notify-send " + title + " " + message + " | at " + strDate);
-          builder.inheritIO().start();
+    public void SendNotification(){
+        try{
+            String os = System.getProperty("os.name");
+            if (os.contains("Linux") || os.contains("Mac")){
+              DateFormat dateFormat = new SimpleDateFormat("HH:mm M/dd/yyyy");
+              String strDate = dateFormat.format(fecha);
+              ProcessBuilder builder = new ProcessBuilder(
+                  "bash", "-c",
+                  "echo notify-send " + title + " " + message + " | at " + strDate);
+              builder.inheritIO().start();
+            }
+            else{displayTray();}
         }
-        else{
-            displayTray();
-          }
+        catch(Exception e){logger.error("Error en la creación de la notificación ", e);}
     }
 
-    private void displayTray() {
+    private void displayTray() throws IOException, InterruptedException, URISyntaxException {
         try {
             DateFormat timeFormat = new SimpleDateFormat("HH:mm");
             String time = timeFormat.format(fecha);
@@ -77,9 +75,8 @@ public class Notification{
             Process process = builder.start();
             process.waitFor();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (IOException | URISyntaxException e) {logger.error("Error en la lectura-escritura del script de la notificación"); throw e;}
+        catch (InterruptedException e){logger.error("Proceso interrumpido mientras se preparaba la notificación"); throw e;}
     }
 
     private static String getUniqueName() {

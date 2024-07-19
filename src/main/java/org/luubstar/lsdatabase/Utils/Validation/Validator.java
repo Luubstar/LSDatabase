@@ -69,7 +69,7 @@ public class Validator {
             .map(ValidationMessage::getMessage)
             .collect(Collectors.joining("\n"));
 
-        ValidationType type = m.get(0).getType();
+        ValidationType type = m.getFirst().getType();
         ValidationTooltip tooltip = new ValidationTooltip(concatenatedMessages);
         Tooltip t = tooltip.getTip();
 
@@ -119,7 +119,7 @@ public class Validator {
                     .map(ValidationMessage::getMessage)
                     .collect(Collectors.joining("\n"));
             for (ValidationWrap w : wraps) {
-                w.createTooltip(mensajes.get(0).getType(), concatenatedMessages);
+                w.createTooltip(mensajes.getFirst().getType(), concatenatedMessages);
             }
         }
     }

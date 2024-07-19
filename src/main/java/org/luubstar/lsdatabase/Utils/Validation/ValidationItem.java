@@ -16,8 +16,4 @@ public class ValidationItem {
     public Node getN() {
         return n;
     }
-
-    public Consumer<Validator> getV() {
-        return v;
-    }
 }
