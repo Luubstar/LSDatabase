@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;  
 import java.util.Date;
+import java.util.Objects;
 
 public class Notification{
 
@@ -55,7 +56,7 @@ public class Notification{
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             String date = dateFormat.format(fecha);
 
-            Path pathToScript = Paths.get(App.class.getResource("Utils/script.txt").toURI());
+            Path pathToScript = Paths.get(Objects.requireNonNull(App.class.getResource("Utils/script.txt")).toURI());
             String powershellCommand = Files.readString(pathToScript, StandardCharsets.UTF_8);
 
             String filename = getUniqueName() + ".ps1";

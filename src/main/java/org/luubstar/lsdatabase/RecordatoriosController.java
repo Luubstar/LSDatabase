@@ -127,7 +127,7 @@ public class RecordatoriosController implements SidePanel {
     }
     public void startWrappers(){
         ValidationWrap wrap = validator.wrap(button_Crear, "No se puede crear el recordatorio: \n");
-        wrap.setAction(w -> {createTask();});
+        wrap.setAction(w -> createTask());
     }
 
     public  void checkIfNumber(@SuppressWarnings("exports") TextField t){
