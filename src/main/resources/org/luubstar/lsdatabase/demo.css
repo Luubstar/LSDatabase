@@ -1,0 +1,38 @@
+.error {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, red, 10, 0.5, 0, 0);
+}
+
+.error-tooltip {
+    -fx-background-color: white;
+    -fx-border-color: red;
+    -fx-border-width: 1px;
+    -fx-font-size: 13px;
+    -fx-text-fill: red;
+}
+
+.warning {
+    -fx-border-color: darkgoldenrod;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, darkgoldenrod, 10, 0.5, 0, 0);
+}
+
+.wrap-error{
+        -fx-border-color: red;
+        -fx-border-width: 2px;
+        -fx-effect: dropshadow(gaussian, red, 10, 0.5, 0, 0);
+        -fx-opacity:0.2;
+}
+
+.warning-tooltip {
+    -fx-background-color: white;
+    -fx-border-color: darkgoldenrod;
+    -fx-border-width: 1px;
+    -fx-font-size: 13px;
+    -fx-text-fill: darkgoldenrod;
+}
+
+.formpanel{
+    -fx-border-width: 0px;
+}
