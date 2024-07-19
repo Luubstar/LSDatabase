@@ -6,6 +6,7 @@ module org.luubstar.lsdatabase {
     requires com.dlsc.formsfx;
     requires eu.hansolo.tilesfx;
     requires java.sql;
+    requires org.slf4j;
 
     opens org.luubstar.lsdatabase to javafx.fxml;
     exports org.luubstar.lsdatabase;

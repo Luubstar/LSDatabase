@@ -1,31 +1,44 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
+import org.luubstar.lsdatabase.App;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public record Tabla(List<Columna> columnas, String nombre) {
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public void createColumns(Connection conn) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("PRAGMA table_info(" + nombre + ")");
-        while (rs.next()) {columnas.add(Columna.newFromResultSet(rs));}
+        try{
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(Queries.columnMetadataQuery(this));
+            while (rs.next()) {columnas.add(Columna.newFromResultSet(rs));}
+        }
+        catch (SQLException e){logger.error("Error generando las columnas de la tabla {}", nombre, e); throw e;}
     }
 
-    public Tabla generateTable(Connection conn) throws SQLException {
-        createColumns(conn);
+    public Tabla generateTable(Connection conn){
+        try {
+            createColumns(conn);
 
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM " + nombre);
-        while(rs.next()){
-            for(Columna c: columnas){c.valores().add(rs.getString(c.nombre()));}
+            try(Statement stmt = conn.createStatement()){
+                ResultSet rs = stmt.executeQuery("SELECT * FROM " + nombre);
+                while (rs.next()) {
+                    for (Columna c : columnas) {
+                        c.valores().add(rs.getString(c.nombre()));
+                    }
+                }
+                return this;
+            }
         }
-        Collections.sort(columnas);
-        return this;
+        catch (SQLException e){logger.error("Error generando la tabla {}", this.nombre);}
+        return null;
     }
 
     public Tabla generateTable(Connection conn, ResultSet rs) throws SQLException {
@@ -37,13 +50,4 @@ public record Tabla(List<Columna> columnas, String nombre) {
     }
 
     public static Tabla createEmpty(String name){return new Tabla(new ArrayList<>(), name);}
-
-    @Override
-    public String toString() {
-        StringBuilder res = new StringBuilder("Cantidad de columas: ").append(columnas.size()).append("\nValores:\n");
-        for (Columna c : columnas) {
-            res.append(c).append("\n");
-        }
-        return res.toString();
-    }
 }

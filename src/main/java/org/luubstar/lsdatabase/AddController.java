@@ -95,8 +95,8 @@ public class AddController implements SidePanel {
         }
         else{
             Database.update(actual, valores, ID);
-            ChangePanel.getNavigator().blockMovement(true);
-            isEditing.set(true);
+            ChangePanel.getNavigator().blockMovement(false);
+            isEditing.set(false);
             ChangePanel.changeContent(1);
             ((SearchController) ChangePanel.getController(1)).search();
         }
@@ -107,8 +107,8 @@ public class AddController implements SidePanel {
     public void delete(){
         Database.delete(actual, ID);
         clear();
-        ChangePanel.getNavigator().blockMovement(true);
-        isEditing.set(true);
+        ChangePanel.getNavigator().blockMovement(false);
+        isEditing.set(false);
         ChangePanel.changeContent(1);
         ((SearchController) ChangePanel.getController(1)).search();
     }
