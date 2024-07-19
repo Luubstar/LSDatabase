@@ -43,7 +43,7 @@ public class ChangePanel {
            paneles[index].setVisible(true);
            MainController.index = index;
            try{controllers[index].start();}
-           catch (Exception e){logger.debug("El controlador x no está asignado", e);}
+           catch (Exception e){logger.debug("El controlador {} no está asignado",PANEL_NOMBRES.get(index).toString());}
         }
     }
 

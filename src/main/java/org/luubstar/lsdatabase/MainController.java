@@ -33,6 +33,7 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {ChangePanel.init(root, this);} catch (IOException e) {throw new RuntimeException(e);}
+
         button_Inicio.setOnMouseReleased(e -> ChangePanel.changeContent(Panel.DASHBOARD));
         button_Buscar.setOnMouseReleased(e -> ChangePanel.changeContent(Panel.BUSQUEDA));
         button_Anadir.setOnMouseReleased(e -> ChangePanel.changeContent(Panel.ANADIR));

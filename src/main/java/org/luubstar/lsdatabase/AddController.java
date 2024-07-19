@@ -62,7 +62,7 @@ public class AddController implements SidePanel {
             String def = "";
             if(i < datos.size()){def = datos.get(i);}
             if(!c.clavePrimaria()) {lista.add(Field.ofStringType(def).label(c.nombre()).required(c.noNulo()));}
-            else{ID = datos.get(i);}
+            else if (i < datos.size()){ID = datos.get(i);}
         }
         return lista;
     }

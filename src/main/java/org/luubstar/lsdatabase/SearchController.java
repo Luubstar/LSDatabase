@@ -57,7 +57,7 @@ public class SearchController implements SidePanel {
     }
 
     public void createColumns(Tabla datos){
-        int colIndex = 0;
+        int colIndex = -1;
         for (int i = 0; i < datos.columnas().size(); i++) {
             Columna columna = datos.columnas().get(i);
             if(!columna.clavePrimaria()) {
