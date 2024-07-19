@@ -1,5 +1,7 @@
 package org.luubstar.lsdatabase.Utils;
 import org.luubstar.lsdatabase.App;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -13,9 +15,9 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Notification{
-
-  String title, message;
-  Date fecha;
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
+    String title, message;
+    Date fecha;
 
     public static void main(String[] args){
         try{
@@ -23,7 +25,7 @@ public class Notification{
           n.SendNotification();
           System.out.println("Notificación preparada para dentro de 1 minutos");
         }
-        catch(IOException e){System.out.println(e.getMessage());}
+        catch(IOException e){logger.error("Error en la creación de la notificación ", e);}
     }
 
     public Notification(String title, String message, Date fecha){
@@ -81,7 +83,7 @@ public class Notification{
     }
 
     private static String getUniqueName() {
-        return "script_" + System.currentTimeMillis();
-    }
+    return "script_" + System.currentTimeMillis();
+}
 
 }

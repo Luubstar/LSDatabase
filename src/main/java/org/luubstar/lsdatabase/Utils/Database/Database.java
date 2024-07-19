@@ -14,6 +14,7 @@ public class Database {
     private static String databaseURL;
     private static final String tableName = "Clientes";
     public static List<Tabla> tablas = new ArrayList<>();
+    public static Tabla actual;
 
     private static Connection connectToDb() throws SQLException{
         try{return DriverManager.getConnection(databaseURL);}
@@ -27,9 +28,15 @@ public class Database {
             Tabla t = Tabla.createEmpty(tableName);
             t.generateTable(conn);
             tablas.add(t);
+
+            //-----
+
+            actual = selectTable(0);
         }
         catch (SQLException e){logger.error("Error en la inicialización", e); throw new InstantiationException();}
     }
+
+    public static Tabla selectTable(int i){return tablas.get(i);}
 
     public static void loadFile(String s) throws InvalidParameterException{
         File f = new File(s);

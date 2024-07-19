@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import org.luubstar.lsdatabase.Utils.ChangePanel;
+import org.luubstar.lsdatabase.Utils.Panel;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,18 +33,18 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {ChangePanel.init(root, this);} catch (IOException e) {throw new RuntimeException(e);}
-        button_Inicio.setOnMouseReleased(e -> ChangePanel.changeContent(0));
-        button_Buscar.setOnMouseReleased(e -> ChangePanel.changeContent(1));
-        button_Anadir.setOnMouseReleased(e -> ChangePanel.changeContent(2));
-        button_Facturar.setOnMouseReleased(e -> ChangePanel.changeContent(3));
-        button_Recordatorios.setOnMouseReleased(e -> ChangePanel.changeContent(4));
+        button_Inicio.setOnMouseReleased(e -> ChangePanel.changeContent(Panel.DASHBOARD));
+        button_Buscar.setOnMouseReleased(e -> ChangePanel.changeContent(Panel.BUSQUEDA));
+        button_Anadir.setOnMouseReleased(e -> ChangePanel.changeContent(Panel.ANADIR));
+        button_Facturar.setOnMouseReleased(e -> ChangePanel.changeContent(Panel.FACTURAR));
+        button_Recordatorios.setOnMouseReleased(e -> ChangePanel.changeContent(Panel.RECORDATORIOS));
 
         button_Inicio.disableProperty().bind(canMove);
         button_Buscar.disableProperty().bind(canMove);
         button_Anadir.disableProperty().bind(canMove);
         button_Facturar.disableProperty().bind(canMove);
         button_Recordatorios.disableProperty().bind(canMove);
-        ChangePanel.changeContent(0);
+        ChangePanel.changeContent(Panel.DASHBOARD);
     }
 
     public void blockMovement(boolean b){

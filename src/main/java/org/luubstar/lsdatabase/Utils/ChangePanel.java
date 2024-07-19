@@ -6,42 +6,52 @@ import javafx.scene.layout.*;
 import org.luubstar.lsdatabase.App;
 import org.luubstar.lsdatabase.MainController;
 import org.luubstar.lsdatabase.SidePanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 public class ChangePanel {
-
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static Parent[] paneles;
     private static SidePanel[] controllers;
-    private static final Panels[] PANELS_NOMBRES = new Panels[]{Panels.DASHBOARD, Panels.BUSQUEDA, Panels.ANADIR,
-            Panels.FACTURAR, Panels.RECORDATORIOS,};
+    private static final List<Panel> PANEL_NOMBRES = Arrays.asList(Panel.DASHBOARD, Panel.BUSQUEDA, Panel.ANADIR,
+                                                     Panel.FACTURAR, Panel.RECORDATORIOS);
     public static StackPane mainPane;
     public static MainController navigatorController;
 
-
-    public static void init(StackPane mp,MainController c) throws IOException {
+    public static void init(StackPane mp, MainController c) throws IOException {
         navigatorController = c;
         mainPane = mp;
-        paneles = new Pane[PANELS_NOMBRES.length];
-        controllers = new SidePanel[PANELS_NOMBRES.length];
-        for(int i = 0; i < PANELS_NOMBRES.length; i++){
-            FXMLLoader loader = new FXMLLoader(App.class.getResource(PANELS_NOMBRES[i].ruta + ".fxml"));
+        paneles = new Pane[PANEL_NOMBRES.size()];
+        controllers = new SidePanel[PANEL_NOMBRES.size()];
+        for(int i = 0; i < PANEL_NOMBRES.size(); i++){
+            FXMLLoader loader = new FXMLLoader(App.class.getResource(PANEL_NOMBRES.get(i).ruta + ".fxml"));
             paneles[i] = loader.load();
             controllers[i] = loader.getController();
             mainPane.getChildren().add(paneles[i]);
             paneles[i].setVisible(false);
         }
     }
-    public static void changeContent(int index){
+
+    public static void changeContent(Panel panel){
+        int index = PANEL_NOMBRES.indexOf(panel);
         if(MainController.index != index) {
            for(Parent p : paneles){p.setVisible(false);}
            paneles[index].setVisible(true);
            MainController.index = index;
            try{controllers[index].start();}
-           catch (Exception e){System.out.println("Controlador no asignado " + e.getMessage());}
+           catch (Exception e){logger.debug("El controlador x no está asignado", e);}
         }
     }
 
-    public static SidePanel getController(int index){return controllers[index];}
+    public static SidePanel getController(Panel panel){
+        int index = PANEL_NOMBRES.indexOf(panel);
+        return controllers[index];
+    }
+
     public static MainController getNavigator(){return navigatorController;}
 }

@@ -1,11 +1,11 @@
 package org.luubstar.lsdatabase.Utils;
 
-public enum Panels {
+public enum Panel {
     DASHBOARD("Dashboard"), BUSQUEDA("Busqueda"), ANADIR("Añadir"),
     FACTURAR("Facturar"), RECORDATORIOS("Recordatorios");
 
     final String ruta;
-    Panels(String r){
+    Panel(String r){
         this.ruta = r;
     }
 }
