@@ -14,6 +14,7 @@ import org.luubstar.lsdatabase.Utils.Database.Columna;
 import org.luubstar.lsdatabase.Utils.Database.Database;
 import org.luubstar.lsdatabase.Utils.Database.Tabla;
 import org.luubstar.lsdatabase.Utils.Panel;
+import org.luubstar.lsdatabase.Utils.Popup;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -73,8 +74,6 @@ public class AddController implements SidePanel {
         pane.getChildren().setAll(renderer);
     }
 
-    //TODO: Añadir popup de ok
-    //TODO: Actualizar tabla
     public void add(){
         List<String> valores = formValues();
         if(!isEditing.get()) {Database.add(Database.actual, valores);}
@@ -82,14 +81,19 @@ public class AddController implements SidePanel {
             Database.update(Database.actual, valores, ID);
             editing(false);
         }
+
+        Popup.notify("Entrada añadida exitosamente");
         clear();
     }
 
     //TODO: añadir popup de aviso y ok
     public void delete(){
-        Database.delete(Database.actual, ID);
-        clear();
-        editing(false);
+        if(Popup.askForConfirmation("¿Desea eliminar la entrada?")) {
+            Database.delete(Database.actual, ID);
+            clear();
+            Popup.notify("Entrada eliminada exitosamente");
+            editing(false);
+        }
     }
 
     public void back(){

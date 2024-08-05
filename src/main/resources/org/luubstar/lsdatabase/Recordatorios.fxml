@@ -25,14 +25,14 @@
             </ScrollPane>
          </children>
       </HBox>
-      <HBox fx:id="button_create" alignment="CENTER" prefHeight="49.0" prefWidth="807.0" VBox.vgrow="NEVER">
+      <HBox alignment="CENTER" prefHeight="49.0" prefWidth="807.0" VBox.vgrow="NEVER">
          <children>
-            <Button mnemonicParsing="false" text="Limpiar">
+            <Button mnemonicParsing="false" onMouseReleased="#clear" text="Limpiar">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Crear">
+            <Button fx:id="button_create" mnemonicParsing="false" onMouseReleased="#create" text="Crear">
                <HBox.margin>
                   <Insets left="50.0" />
                </HBox.margin>

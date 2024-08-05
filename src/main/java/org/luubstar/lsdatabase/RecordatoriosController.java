@@ -1,32 +1,40 @@
 package org.luubstar.lsdatabase;
 
-import com.dlsc.formsfx.model.structure.Field;
-import com.dlsc.formsfx.model.structure.Form;
-import com.dlsc.formsfx.model.structure.Group;
+import com.dlsc.formsfx.model.structure.*;
 import com.dlsc.formsfx.model.validators.CustomValidator;
 import com.dlsc.formsfx.view.controls.SimpleRadioButtonControl;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import org.luubstar.lsdatabase.Utils.Notification;
+import org.luubstar.lsdatabase.Utils.Popup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class RecordatoriosController implements SidePanel {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
+    List<String> horas = Arrays.asList("8:00", "17:00", "21:00");
+    List<Integer> horasEntero = Arrays.asList(8, 17, 21);
     @FXML
     VBox pane;
     @FXML
     Button button_create;
+    Form form;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        render(createFrom());
+        form = createFrom();
+        render(form);
+        button_create.disableProperty().bind(form.validProperty());
     }
 
     public void start(){}
@@ -35,10 +43,10 @@ public class RecordatoriosController implements SidePanel {
         return Form.of(
                 Group.of(
                         Field.ofStringType("").label("Titulo").placeholder("Titulo").required(true),
+                        Field.ofStringType("").label("Mensaje").placeholder("Mensaje").required(true),
                         Field.ofDate(LocalDate.now()).required(true).label("Fecha").validate(CustomValidator.forPredicate(
                                 d -> !d.isBefore(LocalDate.now()), "La fecha es anterior a hoy")),
-                        Field.ofStringType("").label("Mensaje").placeholder("Mensaje").required(true),
-                        Field.ofSingleSelectionType(Arrays.asList("8:00", "17:00", "21:00"), 0)
+                        Field.ofSingleSelectionType(horas, 0)
                                 .label("Hora de envío:")
                                 .render(new SimpleRadioButtonControl<>())
                 )
@@ -51,11 +59,23 @@ public class RecordatoriosController implements SidePanel {
         pane.getChildren().add(renderer);
     }
 
-    private void clear(){render(null);}
-    private void create(){
+    public void clear(){render(null);}
 
+    public void create(){
+        String titulo = ((StringField) form.getFields().get(0)).getValue();
+        String mensaje = ((StringField) form.getFields().get(1)).getValue();
+        LocalDate fecha = ((DateField) form.getFields().get(2)).getValue();
+        String s = (String) ((SingleSelectionField<?>) form.getFields().get(3)).getSelection();
+        int h = horasEntero.get(horas.indexOf(s)) * 60*60*1000;
 
+        java.sql.Date sqlDate = java.sql.Date.valueOf(fecha);
+        Date d = new Date(sqlDate.getTime());
+        d.setTime(d.getTime() + h);
 
+        Notification n = new Notification(titulo, mensaje, d);
+        n.SendNotification();
+        logger.info("Notificación creada correctamente");
+        Popup.notify("Notificación creada exitosamente");
         clear();
     }
 }
