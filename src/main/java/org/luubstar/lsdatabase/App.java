@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.luubstar.lsdatabase.Utils.Database.Database;
-import org.luubstar.lsdatabase.Utils.Updater.Updater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +16,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        logger.info("\nINICIANDO APLICACIÓN\n");
+        logger.info("");
+        logger.info("INICIANDO APLICACIÓN\n");
         preloads();
 
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));

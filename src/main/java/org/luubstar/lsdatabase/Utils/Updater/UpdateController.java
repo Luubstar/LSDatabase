@@ -4,7 +4,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,7 +24,7 @@ public class UpdateController implements Initializable {
     @FXML
     Label value;
 
-    public static DoubleProperty barra = new SimpleDoubleProperty(0.0);;
+    public static DoubleProperty barra = new SimpleDoubleProperty(0.0);
     public static StringProperty text = new SimpleStringProperty(" - / - ");
 
     @Override
@@ -46,7 +45,7 @@ public class UpdateController implements Initializable {
         t.start();
         downloadTask.setOnSucceeded(event -> {
             logger.debug("ACTUALIZACIÓN COMPLETADA");
-            System.exit(1);
+            System.exit(0);
         });
     }
 }

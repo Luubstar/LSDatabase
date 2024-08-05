@@ -28,7 +28,7 @@ public class Updater {
     }
 
     private static void downloadVersion()  {
-        logger.debug("Iniciando descarga");
+        logger.debug("INICIANDO DESCARGA");
         String downloadUrl = String.format("https://api.github.com/repos/%s/%s/releases/latest", Updater.OWNER, Updater.REPO);
 
         try {

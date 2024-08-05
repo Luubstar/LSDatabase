@@ -68,9 +68,9 @@ public class Requester {
     protected static void downloadFile(String fileURL, String saveFilePath) throws IOException, URISyntaxException {
         URL url = new URI(fileURL).toURL();
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-        int size = getFileSize(fileURL);
         int responseCode = httpConn.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
+            int size = httpConn.getContentLength();
             InputStream inputStream = httpConn.getInputStream();
             FileOutputStream outputStream = new FileOutputStream(saveFilePath);
             byte[] buffer = new byte[4096];
@@ -94,26 +94,5 @@ public class Requester {
             throw new IOException("Error al descargar el archivo. Código de respuesta: " + responseCode);
         }
         httpConn.disconnect();
-    }
-
-    public static int getFileSize(String fileURL) throws IOException, URISyntaxException {
-        URL url = new URI(fileURL).toURL();
-        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-
-        try {
-            httpConn.setRequestMethod("HEAD"); // Solicita solo las cabeceras
-            int responseCode = httpConn.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                int contentLength = httpConn.getContentLength();
-                if (contentLength <= 0) {
-                    throw new IOException("No se pudo determinar el tamaño del archivo.");
-                }
-                return contentLength;
-            } else {
-                throw new IOException("Error al obtener el tamaño del archivo. Código de respuesta: " + responseCode);
-            }
-        } finally {
-            httpConn.disconnect();
-        }
     }
 }
