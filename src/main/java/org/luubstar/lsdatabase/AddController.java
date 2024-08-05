@@ -86,7 +86,6 @@ public class AddController implements SidePanel {
         clear();
     }
 
-    //TODO: añadir popup de aviso y ok
     public void delete(){
         if(Popup.askForConfirmation("¿Desea eliminar la entrada?")) {
             Database.delete(Database.actual, ID);
