@@ -17,6 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        logger.info("\nINICIANDO APLICACIÓN\n");
         preloads();
 
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));

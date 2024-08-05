@@ -29,9 +29,9 @@ public class Version {
         try {
             String latestVersion =  Objects.requireNonNull(Requester.launchRequest(client, request, url)).path("tag_name").asText();
             if(compareVersions(latestVersion, getVersion())){
-                FileWriter writer = new FileWriter("version.txt");
+                /*FileWriter writer = new FileWriter("version.txt");
                 writer.write(latestVersion);
-                writer.close();
+                writer.close();*/
                 return true;
             }
         }

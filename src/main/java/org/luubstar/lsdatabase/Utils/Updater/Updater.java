@@ -3,11 +3,7 @@ package org.luubstar.lsdatabase.Utils.Updater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
+import java.io.*;
 
 public class Updater {
     private static final Logger logger = LoggerFactory.getLogger(Updater.class);
@@ -16,8 +12,8 @@ public class Updater {
 
     public static void update(){
         try{
-            if(isBiggerVersion(OWNER, REPO)){
-                downloadVersion(OWNER, REPO);
+            if(isBiggerVersion()){
+                downloadVersion();
                 logger.info("La aplicación está actualizada");
             }
             else{logger.info("La aplicación está al día");}
@@ -27,23 +23,31 @@ public class Updater {
         }
     }
 
-    private static boolean isBiggerVersion(String owner, String repo){
-      return Version.isBiggerVersion(owner, repo);
+    private static boolean isBiggerVersion(){
+      return Version.isBiggerVersion(Updater.OWNER, Updater.REPO);
     }
 
-    private static void downloadVersion(String owner, String repo) throws IOException {
-        String downloadUrl = String.format("https://api.github.com/repos/%s/%s/releases/latest", owner, repo);
-        try (BufferedInputStream in = new BufferedInputStream(new URL(downloadUrl).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream("nuevoArchivo.jar")) {
-            byte[] dataBuffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                fileOutputStream.write(dataBuffer, 0, bytesRead);
+    private static void downloadVersion()  {
+        logger.debug("Iniciando descarga");
+        String downloadUrl = String.format("https://api.github.com/repos/%s/%s/releases/latest", Updater.OWNER, Updater.REPO);
+
+        try {
+            String assetUrl = Requester.getLatestReleaseAssetUrl(downloadUrl);
+            if (assetUrl != null) {
+                String saveFilePath = "descargado.jar";
+                Requester.downloadFile(assetUrl, saveFilePath);
+                logger.info("Archivo descargado satisfactoriamente");
             }
+            else {logger.error("No se encontró archivo a descargar ");}
+
+        } catch (Exception e) {logger.error("Error en la descarga del fichero ", e);}
+
+
+        File oldFile = new File("App.jar");
+        if(!oldFile.delete()){logger.error("Fichero base no puede ser eliminado");}
+        else{
+            boolean ignored = new File("descargado.jar").renameTo(oldFile);
         }
-        // Opcional: Reemplazar el archivo viejo por el nuevo
-        File oldFile = new File("antiguoArchivo.jar");
-        oldFile.delete();
-        new File("nuevoArchivo.jar").renameTo(oldFile);
     }
+
 }
