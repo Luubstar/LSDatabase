@@ -7,6 +7,8 @@ module org.luubstar.lsdatabase {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires org.slf4j;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
 
     opens org.luubstar.lsdatabase to javafx.fxml;
     exports org.luubstar.lsdatabase;
