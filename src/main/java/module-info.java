@@ -11,6 +11,8 @@ module org.luubstar.lsdatabase {
     requires com.fasterxml.jackson.databind;
 
     opens org.luubstar.lsdatabase to javafx.fxml;
+    opens org.luubstar.lsdatabase.Utils.Updater to javafx.fxml;
     exports org.luubstar.lsdatabase;
     exports org.luubstar.lsdatabase.Utils.Database;
+    exports org.luubstar.lsdatabase.Utils.Updater;
 }

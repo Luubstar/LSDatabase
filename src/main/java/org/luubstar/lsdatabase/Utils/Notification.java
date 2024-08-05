@@ -20,12 +20,6 @@ public class Notification{
     String title, message;
     Date fecha;
 
-    public static void main(String[] args){
-          Notification n = new Notification("Titulo", "Mensaje", new Date(System.currentTimeMillis() + 60000));
-          n.SendNotification();
-          logger.info("Notificación preparada para dentro de 1 minuto");
-    }
-
     public Notification(String title, String message, Date fecha){
         this.title = title;
         this.message = message;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.luubstar.lsdatabase.Utils.Updater.UpdateController">
+   <children>
+      <ImageView fitHeight="215.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@spinner.gif" />
+         </image>
+         <VBox.margin>
+            <Insets bottom="50.0" />
+         </VBox.margin>
+      </ImageView>
+      <Label prefHeight="23.0" prefWidth="86.0" text="Descargando...">
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </Label>
+      <ProgressBar fx:id="bar" prefHeight="28.0" prefWidth="399.0" progress="0.0" />
+      <HBox alignment="TOP_CENTER" prefHeight="64.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="value" />
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

@@ -2,10 +2,12 @@ package org.luubstar.lsdatabase.Utils.Updater;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.application.Platform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -66,23 +68,52 @@ public class Requester {
     protected static void downloadFile(String fileURL, String saveFilePath) throws IOException, URISyntaxException {
         URL url = new URI(fileURL).toURL();
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-
+        int size = getFileSize(fileURL);
         int responseCode = httpConn.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
             InputStream inputStream = httpConn.getInputStream();
             FileOutputStream outputStream = new FileOutputStream(saveFilePath);
-
             byte[] buffer = new byte[4096];
             int bytesRead;
+            int i = 0;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
+                i += bytesRead;
+                int finalI = i;
+                Platform.runLater(() -> UpdateController.barra.set((double) finalI /size));
+                Platform.runLater(() ->  UpdateController.text.set(finalI + " / " + size));
             }
 
             outputStream.close();
             inputStream.close();
+
+            FileWriter writer = new FileWriter("version.txt");
+            writer.write(Version.lastVersion);
+            writer.close();
         } else {
             throw new IOException("Error al descargar el archivo. Código de respuesta: " + responseCode);
         }
         httpConn.disconnect();
+    }
+
+    public static int getFileSize(String fileURL) throws IOException, URISyntaxException {
+        URL url = new URI(fileURL).toURL();
+        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+
+        try {
+            httpConn.setRequestMethod("HEAD"); // Solicita solo las cabeceras
+            int responseCode = httpConn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                int contentLength = httpConn.getContentLength();
+                if (contentLength <= 0) {
+                    throw new IOException("No se pudo determinar el tamaño del archivo.");
+                }
+                return contentLength;
+            } else {
+                throw new IOException("Error al obtener el tamaño del archivo. Código de respuesta: " + responseCode);
+            }
+        } finally {
+            httpConn.disconnect();
+        }
     }
 }

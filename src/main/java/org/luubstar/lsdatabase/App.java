@@ -36,7 +36,6 @@ public class App extends Application {
         try{
             Database.loadFile("base.db");
             Database.start();
-            Updater.update();
         }
         catch (Exception e){logger.error("Error fatal en la inicialización de la base de datos ", e); System.exit(1);}
     }

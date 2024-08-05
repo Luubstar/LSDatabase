@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -12,6 +13,8 @@ import java.net.http.HttpRequest;
 import java.util.Objects;
 
 public class Version {
+
+    public static String lastVersion;
 
     private static final Logger logger = LoggerFactory.getLogger(Updater.class);
     protected static boolean isBiggerVersion(String owner, String repo){
@@ -26,10 +29,8 @@ public class Version {
 
         try {
             String latestVersion =  Objects.requireNonNull(Requester.launchRequest(client, request, url)).path("tag_name").asText();
+            lastVersion = latestVersion;
             if(compareVersions(latestVersion, getVersion())){
-                /*FileWriter writer = new FileWriter("version.txt");
-                writer.write(latestVersion);
-                writer.close();*/
                 return true;
             }
         }
