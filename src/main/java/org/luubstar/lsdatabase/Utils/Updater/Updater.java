@@ -8,7 +8,7 @@ import java.io.*;
 public class Updater {
     private static final Logger logger = LoggerFactory.getLogger(Updater.class);
     private static final String OWNER = "Luubstar";
-    private static final String REPO = "LSBase";
+    private static final String REPO = "LSDatabase";
 
     public static void update(){
         try{

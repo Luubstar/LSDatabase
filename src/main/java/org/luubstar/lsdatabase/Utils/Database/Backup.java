@@ -18,6 +18,7 @@ public class Backup {
 
     private static final String dir = "backups";
     private static final int daysBetweenBackup = 7;
+    private static final int maxBackups = 4;
     private static final Logger logger = LoggerFactory.getLogger(Backup.class);
     protected static void makeBackup() throws IOException {
         if(createDirectory()){
@@ -61,7 +62,7 @@ public class Backup {
             throw new IOException("Error al leer los ficheros de la carpeta de backups");
         }
 
-        if (backups.length > 7) {
+        if (backups.length > maxBackups) {
             List<File> fileList = new ArrayList<>(List.of(backups));
             Collections.sort(fileList);
             if(!fileList.getFirst().delete()){logger.error("¡Error eliminando un backup!");}
