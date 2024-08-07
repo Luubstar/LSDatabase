@@ -7,19 +7,19 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import org.luubstar.lsdatabase.Utils.ChangePanel;
 import org.luubstar.lsdatabase.Utils.Database.Columna;
 import org.luubstar.lsdatabase.Utils.Database.Database;
+import org.luubstar.lsdatabase.Utils.Database.Dropzone;
 import org.luubstar.lsdatabase.Utils.Database.Tabla;
 import org.luubstar.lsdatabase.Utils.Panel;
 import org.luubstar.lsdatabase.Utils.Popup;
 
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AddController implements SidePanel {
     @FXML
@@ -28,18 +28,23 @@ public class AddController implements SidePanel {
     Button button_back;
     @FXML
     Button button_delete;
+    @FXML
+    Button button_save;
+
     final BooleanProperty isEditing = new SimpleBooleanProperty(false);
 
     FormRenderer renderer;
+    Form f;
     List<StringField> lista;
     String ID = "";
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //TODO: Aquí también leemos la 1º tabla...
-        lista = formByTable(Database.actual);
-        renderer = new FormRenderer(Form.of(Group.of(lista.toArray(new Element[0]))).title(Database.actual.nombre()));
-        pane.getChildren().add(renderer);
+        visualizarDatos(Database.actual, FXCollections.observableArrayList());
+
+        ChangePanel.getNavigator().blockMovement(false);
+        isEditing.set(false);
+
         button_back.visibleProperty().bind(isEditing);
         button_delete.visibleProperty().bind(isEditing);
     }
@@ -49,8 +54,15 @@ public class AddController implements SidePanel {
 
     public void visualizarDatos(Tabla t, ObservableList<String> datos){
         lista = formByTable(t,datos);
-        renderer = new FormRenderer(Form.of(Group.of(lista.toArray(new Element[0]))).title(t.nombre()));
+        f = Form.of(Group.of(lista.toArray(new Element[0]))).title(t.nombre());
+        f.getFields().getFirst().required(true);
+
+        renderer = new FormRenderer(f);
+
         pane.getChildren().setAll(renderer);
+
+        addDropZone();
+        button_save.disableProperty().bind(f.validProperty().not());
         editing(true);
     }
 
@@ -113,5 +125,20 @@ public class AddController implements SidePanel {
         List<String> res = new LinkedList<>();
         for (StringField e : lista) {res.add(e.getValue());}
         return res;
+    }
+
+    private void addDropZone(){
+        Label titulo = new Label("Ficheros");
+        Label l = new Label("");
+
+        l.getStyleClass().add("dropzone");
+        l.setPrefSize(380, 0);
+
+        l.setOnDragOver(event -> Dropzone.configureZone(l, event));
+        l.setOnDragEntered(event -> {Dropzone.setOnEntered(l,event); l.setText("+");});
+        l.setOnDragExited(event -> {Dropzone.setOnExit(l,event); l.setText("");});
+        l.setOnDragDropped(Dropzone::fileDropped);
+
+        pane.getChildren().addAll(titulo, l);
     }
 }

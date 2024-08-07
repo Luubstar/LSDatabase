@@ -37,7 +37,7 @@
                   <Insets right="50.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onMouseReleased="#add" text="Guardar">
+            <Button fx:id="button_save" mnemonicParsing="false" onMouseReleased="#add" text="Guardar">
                <HBox.margin>
                   <Insets left="50.0" />
                </HBox.margin>

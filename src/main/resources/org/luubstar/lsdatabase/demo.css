@@ -36,3 +36,9 @@
 .formpanel{
     -fx-border-width: 0px;
 }
+
+.dropzone{
+    -fx-border-color: gray;
+    -fx-padding: 70px;
+    -fx-alignment: center;
+}

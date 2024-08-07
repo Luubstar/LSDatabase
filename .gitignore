@@ -39,5 +39,6 @@ build/
 *.db
 
 *.jar
-/log
-/log/*
+log
+log/*
+backups

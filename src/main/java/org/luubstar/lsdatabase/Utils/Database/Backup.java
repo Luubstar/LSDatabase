@@ -33,6 +33,8 @@ public class Backup {
             throw new IOException("Error al leer los ficheros de la carpeta de backups");
         }
 
+        if(backups.length == 0){return daysBetweenBackup;}
+
         List<File> fileList = new ArrayList<>(List.of(backups));
         Collections.sort(fileList);
         fileList = fileList.reversed();
@@ -59,9 +61,8 @@ public class Backup {
             throw new IOException("Error al leer los ficheros de la carpeta de backups");
         }
 
-        List<File> fileList = new ArrayList<>(List.of(backups));
-
-        if (fileList.size() > 7) {
+        if (backups.length > 7) {
+            List<File> fileList = new ArrayList<>(List.of(backups));
             Collections.sort(fileList);
             if(!fileList.getFirst().delete()){logger.error("¡Error eliminando un backup!");}
         }

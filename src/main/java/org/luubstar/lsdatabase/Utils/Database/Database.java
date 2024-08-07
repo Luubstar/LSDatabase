@@ -77,6 +77,11 @@ public class Database {
 
     public static void delete(Tabla tabla, String ID) {
         try (Connection conn = connectToDb()) {
+            String foreignKeySupport = "PRAGMA foreign_keys = ON;";
+            try (PreparedStatement stmt = conn.prepareStatement(foreignKeySupport)) {
+                stmt.execute();
+            }
+
             String query = Queries.deleteQuery(tabla);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, ID);
