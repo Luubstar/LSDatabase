@@ -16,20 +16,23 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        logger.info("");
-        logger.info("INICIANDO APLICACIÓN\n");
-        preloads();
+        try {
+            logger.info("");
+            logger.info("INICIANDO APLICACIÓN\n");
+            preloads();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("demo.css")).toExternalForm());
-        stage.setTitle("Database");
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("demo.css")).toExternalForm());
+            stage.setTitle("Database");
 
-        stage.setMinWidth(1050);
-        stage.setMinHeight(700);
+            stage.setMinWidth(1050);
+            stage.setMinHeight(700);
 
-        stage.setScene(scene);
-        stage.show();
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (Exception e){logger.error("Se ha detectado un error en el inicio ", e);}
     }
 
     private static void preloads(){

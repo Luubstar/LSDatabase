@@ -1,6 +1,5 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
-import javafx.scene.control.Tab;
 import org.luubstar.lsdatabase.App;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,7 @@ public class Database {
     private static final String tableName = "Clientes";
     public static List<Tabla> tablas = new ArrayList<>();
     public static Tabla actual;
+    protected static File actualFile;
 
     private static Connection connectToDb() throws SQLException{
         try{return DriverManager.getConnection(databaseURL);}
@@ -28,21 +28,20 @@ public class Database {
             Tabla t = Tabla.createEmpty(tableName);
             t.generateTable(conn);
             tablas.add(t);
-
-            //-----
-
             actual = selectTable(0);
+
+            Backup.makeBackup();
         }
-        catch (SQLException e){logger.error("Error en la inicialización", e); throw new InstantiationException();}
+        catch (Exception e){logger.error("Error en la inicialización", e); throw new InstantiationException();}
     }
 
     public static Tabla selectTable(int i){return tablas.get(i);}
 
     public static void loadFile(String s) throws InvalidParameterException{
-        File f = new File(s);
-        if(f.exists() && f.isFile() && f.canRead()){
+        actualFile = new File(s);
+        if(actualFile.exists() && actualFile.isFile() && actualFile.canRead()){
             databaseURL = "jdbc:sqlite:" + s;}
-        else{throw new InvalidParameterException("Not a file " + f.getAbsolutePath());}
+        else{throw new InvalidParameterException("Not a file " + actualFile.getAbsolutePath());}
     }
 
     public static Tabla searchLike(Tabla original, String s) {
