@@ -76,12 +76,14 @@ public class Requester {
             byte[] buffer = new byte[4096];
             int bytesRead;
             int i = 0;
+
+            String sizeFormated = String.format("%.2f",(double) size/1000000);
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
                 i += bytesRead;
                 int finalI = i;
                 Platform.runLater(() -> UpdateController.barra.set((double) finalI /size));
-                Platform.runLater(() ->  UpdateController.text.set(finalI + " / " + size));
+                Platform.runLater(() ->  UpdateController.text.set( String.format("%.2f",(double) finalI/1000000) + " MBs / " + sizeFormated + " MBs"));
             }
 
             outputStream.close();

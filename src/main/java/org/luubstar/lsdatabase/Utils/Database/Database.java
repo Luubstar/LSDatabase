@@ -1,5 +1,6 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
+import javafx.scene.control.Tab;
 import org.luubstar.lsdatabase.App;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +24,6 @@ public class Database {
 
     public static void start() throws InstantiationException {
         if(databaseURL == null){throw new InstantiationException("Database can't be null");}
-        //TODO: Ahora mismo solo lee la primera tabla
         try(Connection conn = connectToDb()) {
             Tabla t = Tabla.createEmpty(tableName);
             t.generateTable(conn);
@@ -101,5 +101,9 @@ public class Database {
             logger.error("Error actualizando la tabla {} en el ID {}.\nQuery -> {}", tabla.nombre(),
                     ID, Queries.updateQuery(tabla), e);
         }
+    }
+
+    public static int entries(Tabla tab){
+        return tab.columnas().getFirst().valores().size();
     }
 }
