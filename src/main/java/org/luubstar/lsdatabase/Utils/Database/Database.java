@@ -16,6 +16,7 @@ public class Database {
     public static List<Tabla> tablas = new ArrayList<>();
     public static Tabla actual;
     protected static File actualFile;
+    public static final String DEFAULT = "base.db";
 
     private static Connection connectToDb() throws SQLException{
         try{return DriverManager.getConnection(databaseURL);}

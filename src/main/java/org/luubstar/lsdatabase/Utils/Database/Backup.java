@@ -14,20 +14,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
 public class Backup {
 
-    private static final String dir = "backups";
-    private static final int daysBetweenBackup = 7;
-    private static final int maxBackups = 4;
+    static final String dir = "backups";
+    static final int daysBetweenBackup = 7;
+    static final int maxBackups = 4;
     private static final Logger logger = LoggerFactory.getLogger(Backup.class);
-    protected static void makeBackup() throws IOException {
+
+    static String makeDataString(){
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return localDate.format(formatter);
+    }
+
+     static void makeBackup() throws IOException {
         if(createDirectory()){
-            File backup = new File(dir + "/backup_" + LocalDate.now() + ".db");
+            File backup = new File(dir + "/backup_" + makeDataString() + ".db");
             if(!backup.exists() && lastBackupDate() >= daysBetweenBackup) {createBackupFile();}
         }
     }
 
-    private static int lastBackupDate() throws IOException {
+    static int lastBackupDate() throws IOException {
         File d =  new File(dir);
         File[] backups = d.listFiles();
         if (backups == null) {
@@ -48,14 +56,10 @@ public class Backup {
         return (int) ChronoUnit.DAYS.between(Date, LocalDate.now());
     }
 
-    private static void createBackupFile() throws IOException {
+    static void createBackupFile() throws IOException {
         File d =  new File(dir);
 
-        LocalDate localDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String dateString = localDate.format(formatter);
-
-        Files.copy(Database.actualFile.toPath(), Path.of(dir + "/backup_" + dateString + ".db"));
+        Files.copy(Database.actualFile.toPath(), Path.of(dir + "/backup_" + makeDataString() + ".db"));
 
         File[] backups = d.listFiles();
         if (backups == null) {
@@ -69,14 +73,30 @@ public class Backup {
         }
     }
 
-    private static boolean createDirectory(){
+    synchronized static boolean createDirectory(){
         File d = new File(dir);
 
         if(!d.exists()){
-            if(d.mkdir()){logger.debug("La carpeta backups ha sido creada");}
-            else{logger.debug("La carpeta backups no pudo ser creada"); return false;}
+            if(!d.mkdir()){logger.debug("La carpeta backups no pudo ser creada"); return false;}
         }
 
+        return true;
+    }
+
+    synchronized static boolean deleteDirectory(){
+        File directory = new File(Backup.dir);
+
+        File[] files = directory.listFiles();
+
+        if(files != null){
+            for(File f : files){
+                if(!f.delete()){logger.error("Error limpiando ficheros");}
+            }
+        }
+
+        if(directory.exists() && directory.isDirectory()) {
+            return directory.delete();
+        }
         return true;
     }
 }
