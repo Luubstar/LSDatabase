@@ -15,4 +15,5 @@ module org.luubstar.lsdatabase {
     exports org.luubstar.lsdatabase;
     exports org.luubstar.lsdatabase.Utils.Database;
     exports org.luubstar.lsdatabase.Utils.Updater;
+    exports org.luubstar.lsdatabase.Utils;
 }

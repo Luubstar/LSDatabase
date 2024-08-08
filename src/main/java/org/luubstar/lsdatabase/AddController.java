@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import org.luubstar.lsdatabase.Utils.ChangePanel;
 import org.luubstar.lsdatabase.Utils.Database.Columna;
 import org.luubstar.lsdatabase.Utils.Database.Database;
-import org.luubstar.lsdatabase.Utils.Database.Dropzone;
+import org.luubstar.lsdatabase.Utils.Dropzone;
 import org.luubstar.lsdatabase.Utils.Database.Tabla;
 import org.luubstar.lsdatabase.Utils.Panel;
 import org.luubstar.lsdatabase.Utils.Popup;
