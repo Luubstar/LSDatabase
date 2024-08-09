@@ -3,6 +3,7 @@ package org.luubstar.lsdatabase.Utils.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.processing.Generated;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,12 +16,15 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class Backup {
+public final class Backup {
 
-    static final String dir = "backups";
+    static final String DIR = "backups";
     static final int daysBetweenBackup = 7;
     static final int maxBackups = 4;
     private static final Logger logger = LoggerFactory.getLogger(Backup.class);
+
+    @Generated("Constructor privado")
+    private Backup(){}
 
     static String makeDataString(){
         LocalDate localDate = LocalDate.now();
@@ -30,13 +34,13 @@ public class Backup {
 
      static void makeBackup() throws IOException {
         if(createDirectory()){
-            File backup = new File(dir + "/backup_" + makeDataString() + ".db");
-            if(!backup.exists() && lastBackupDate() >= daysBetweenBackup) {createBackupFile();}
+            File backup = new File(DIR + "/backup_" + makeDataString() + ".db");
+            if(!backup.exists() && lastBackupDate() >= daysBetweenBackup) {createBackupFile(Backup.DIR);}
         }
     }
 
     static int lastBackupDate() throws IOException {
-        File d =  new File(dir);
+        File d =  new File(DIR);
         File[] backups = d.listFiles();
         if (backups == null) {
             throw new IOException("Error al leer los ficheros de la carpeta de backups");
@@ -56,10 +60,10 @@ public class Backup {
         return (int) ChronoUnit.DAYS.between(Date, LocalDate.now());
     }
 
-    static void createBackupFile() throws IOException {
-        File d =  new File(dir);
+    static void createBackupFile(String dir_) throws IOException {
+        File d = new File(dir_);
 
-        Files.copy(Database.actualFile.toPath(), Path.of(dir + "/backup_" + makeDataString() + ".db"));
+        Files.copy(Database.actualFile.toPath(), Path.of(dir_ + "/backup_" + makeDataString() + ".db"));
 
         File[] backups = d.listFiles();
         if (backups == null) {
@@ -74,7 +78,7 @@ public class Backup {
     }
 
     static boolean createDirectory(){
-        File d = new File(dir);
+        File d = new File(DIR);
 
         if(!d.exists()){
             if(!d.mkdir()){logger.debug("La carpeta backups no pudo ser creada"); return false;}
@@ -84,7 +88,7 @@ public class Backup {
     }
 
     static boolean deleteDirectory(){
-        File directory = new File(Backup.dir);
+        File directory = new File(Backup.DIR);
 
         File[] files = directory.listFiles();
 

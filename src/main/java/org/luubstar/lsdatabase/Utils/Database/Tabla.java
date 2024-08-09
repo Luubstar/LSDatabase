@@ -36,7 +36,7 @@ public record Tabla(List<Columna> columnas, String nombre) {
                 return this;
             }
         }
-        catch (SQLException e){logger.error("Error generando la tabla {}", this.nombre, e);}
+        catch (Exception e){logger.error("Error generando la tabla {}", this.nombre, e); }
         return null;
     }
 

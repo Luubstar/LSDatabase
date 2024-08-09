@@ -1,8 +1,13 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
+import javax.annotation.processing.Generated;
 import java.util.List;
 
 public class Queries {
+
+    @Generated("Constructor privado")
+    private Queries(){}
+
     protected static String searchQuery(Tabla t, String s){
         StringBuilder query = new StringBuilder("SELECT * FROM " + t.nombre() + " WHERE ");
         for (int i = 0; i < t.columnas().size(); i++) {

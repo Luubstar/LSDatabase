@@ -2,6 +2,8 @@ package org.luubstar.lsdatabase.Utils.Database;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.processing.Generated;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +18,9 @@ public class Database {
     public static final String DEFAULT = "base.db";
     static File actualFile;
     static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/defaultBase.db";
+
+    @Generated("Constructor privado")
+    private Database(){}
 
     public static void loadFile(String s) {
         actualFile = new File(s);

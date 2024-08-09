@@ -2,6 +2,7 @@ package org.luubstar.lsdatabase.Utils.Database;
 
 import org.junit.jupiter.api.*;
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -35,9 +36,9 @@ public class BackupTest {
     void CreateBackup(String n){
         if(new File(n).exists()){Assertions.fail("El fichero ya existe " + n);}
         try{
-            Backup.createBackupFile();
-            File f = new File(Backup.dir + "/backup_" + getDateString(LocalDate.now()) + ".db");
-            if(!f.renameTo(new File(Backup.dir + "/" + n))){
+            Backup.createBackupFile(Backup.DIR);
+            File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".db");
+            if(!f.renameTo(new File(Backup.DIR + "/" + n))){
                 Assertions.fail("Error renombrando fichero");
             }
         }
@@ -54,7 +55,7 @@ public class BackupTest {
     void testMakeNewDirectory(){
         Backup.deleteDirectory();
         boolean create = Backup.createDirectory();
-        File d = new File(Backup.dir);
+        File d = new File(Backup.DIR);
         Assertions.assertTrue(create && d.exists(), "La carpeta se crea correctamente");
     }
 
@@ -68,11 +69,11 @@ public class BackupTest {
 
     @Test
     void testCreateBackupFile(){
-        try{Backup.createBackupFile();}
+        try{Backup.createBackupFile(Backup.DIR);}
         catch (Exception e){Assertions.fail("Error en la creación de un backup ", e);}
 
-        File f = new File(Backup.dir + "/backup_" + getDateString(LocalDate.now()) + ".db");
-        File[] files = new File(Backup.dir).listFiles();
+        File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".db");
+        File[] files = new File(Backup.DIR).listFiles();
 
         Assertions.assertNotNull(files, "No se ha creado el fichero");
         Assertions.assertEquals(1, files.length, "Existe más de un fichero en la carpeta backups");
@@ -80,10 +81,15 @@ public class BackupTest {
     }
 
     @Test
+    void testCreateBackupFileFailed(){
+        Assertions.assertThrows(IOException.class, () -> Backup.createBackupFile(""));
+    }
+
+    @Test
     void testCreateNoMoreThanMaxBackups(){
         for(int i = 0; i < Backup.maxBackups; i++){CreateBackup(String.valueOf(i));}
         CreateBackup(String.valueOf(Backup.maxBackups));
-        File[] files = new File(Backup.dir).listFiles();
+        File[] files = new File(Backup.DIR).listFiles();
 
         Assertions.assertNotNull(files, "No se han creado los ficheros");
 
@@ -123,7 +129,7 @@ public class BackupTest {
         try{Backup.makeBackup();}
         catch (Exception e){Assertions.fail("Error en la función makebackup");}
 
-        File f = new File(Backup.dir + "/backup_" + getDateString(LocalDate.now()) + ".db");
+        File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".db");
 
         Assertions.assertTrue(f.exists(), "La función makeBackup no crea un backup");
     }
@@ -132,4 +138,5 @@ public class BackupTest {
     void testTimeString(){
         Assertions.assertEquals(getDateString(LocalDate.now()), Backup.makeDataString());
     }
+
 }
