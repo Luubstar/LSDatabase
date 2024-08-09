@@ -24,6 +24,11 @@ public class DatabaseTest {
 
     @Test
     void testLoadToDB(){
+        Database.loadFile("123");
+        Assertions.assertTrue(new File("123").exists());
+
+        new File("123").delete();
+
         Database.loadFile(Database.PLANTILLA);
         File f = new File(Database.PLANTILLA);
 

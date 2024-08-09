@@ -62,7 +62,7 @@ public class BackupTest {
     @Test
     void testLastBackupDateWhenEmpty(){
         int v = 0;
-        try{v = Backup.lastBackupDate();}
+        try{v = Backup.lastBackupDate(Backup.DIR);}
         catch (Exception e){Assertions.fail("Error obteniendo la última fecha");}
         Assertions.assertEquals(Backup.daysBetweenBackup, v, "Si no hay backups, el tiempo mostrado es el máximo");
     }
@@ -82,7 +82,12 @@ public class BackupTest {
 
     @Test
     void testCreateBackupFileFailed(){
-        Assertions.assertThrows(IOException.class, () -> Backup.createBackupFile(""));
+        Assertions.assertThrows(IOException.class, () -> Backup.createBackupFile("123"));
+    }
+
+    @Test
+    void testLastBackupDateFailed(){
+        Assertions.assertThrows(IOException.class, () -> Backup.lastBackupDate("123"));
     }
 
     @Test
@@ -107,7 +112,7 @@ public class BackupTest {
         CreateBackup(getDateString(LocalDate.now()));
 
         int v = 0;
-        try{v = Backup.lastBackupDate();}
+        try{v = Backup.lastBackupDate(Backup.DIR);}
         catch (Exception e){Assertions.fail("Error obteniendo la última fecha");}
 
         Assertions.assertEquals(0, v, "La diferencia de un fichero creado hoy debería ser 0");
@@ -118,7 +123,7 @@ public class BackupTest {
         CreateBackup(getDateString(LocalDate.now().minusDays(2)));
 
         int v = 0;
-        try{v = Backup.lastBackupDate();}
+        try{v = Backup.lastBackupDate(Backup.DIR);}
         catch (Exception e){Assertions.fail("Error obteniendo la última fecha");}
 
         Assertions.assertEquals(2, v, "La diferencia de un fichero creado hace 2 días debería ser 2");

@@ -28,7 +28,7 @@ public class Database {
             databaseURL = "jdbc:sqlite:" + s;}
         else{
             File f = new File(PLANTILLA);
-            try{Files.copy(Path.of("./" + s), f.toPath());}
+            try{Files.copy(f.toPath(),Path.of("./" + s));}
             catch (Exception e){logger.error("Error copiando el fichero ",e);}
         }
     }

@@ -35,12 +35,12 @@ public final class Backup {
      static void makeBackup() throws IOException {
         if(createDirectory()){
             File backup = new File(DIR + "/backup_" + makeDataString() + ".db");
-            if(!backup.exists() && lastBackupDate() >= daysBetweenBackup) {createBackupFile(Backup.DIR);}
+            if(!backup.exists() && lastBackupDate(DIR) >= daysBetweenBackup) {createBackupFile(Backup.DIR);}
         }
     }
 
-    static int lastBackupDate() throws IOException {
-        File d =  new File(DIR);
+    static int lastBackupDate(String dir_) throws IOException {
+        File d =  new File(dir_);
         File[] backups = d.listFiles();
         if (backups == null) {
             throw new IOException("Error al leer los ficheros de la carpeta de backups");
