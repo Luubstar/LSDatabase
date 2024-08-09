@@ -128,4 +128,8 @@ public class BackupTest {
         Assertions.assertTrue(f.exists(), "La función makeBackup no crea un backup");
     }
 
+    @Test
+    void testTimeString(){
+        Assertions.assertEquals(getDateString(LocalDate.now()), Backup.makeDataString());
+    }
 }

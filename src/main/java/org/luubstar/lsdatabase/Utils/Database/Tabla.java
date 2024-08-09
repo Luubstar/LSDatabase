@@ -1,6 +1,5 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
-import org.luubstar.lsdatabase.App;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record Tabla(List<Columna> columnas, String nombre) {
-    private static final Logger logger = LoggerFactory.getLogger(App.class);
+    private static final Logger logger = LoggerFactory.getLogger(Tabla.class);
 
     public void createColumns(Connection conn) throws SQLException {
         try{
@@ -37,7 +36,7 @@ public record Tabla(List<Columna> columnas, String nombre) {
                 return this;
             }
         }
-        catch (SQLException e){logger.error("Error generando la tabla {}", this.nombre);}
+        catch (SQLException e){logger.error("Error generando la tabla {}", this.nombre, e);}
         return null;
     }
 

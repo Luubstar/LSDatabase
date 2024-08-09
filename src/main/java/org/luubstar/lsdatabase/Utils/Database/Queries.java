@@ -50,5 +50,7 @@ public class Queries {
         return query.toString();
     }
 
+    protected static String dropQuery(Tabla t){return "DELETE FROM " + t.nombre();}
+
     protected static String columnMetadataQuery(Tabla t){return "PRAGMA table_info(" + t.nombre() + ")";}
 }

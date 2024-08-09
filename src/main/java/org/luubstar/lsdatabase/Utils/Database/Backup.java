@@ -73,7 +73,7 @@ public class Backup {
         }
     }
 
-    synchronized static boolean createDirectory(){
+    static boolean createDirectory(){
         File d = new File(dir);
 
         if(!d.exists()){
@@ -83,7 +83,7 @@ public class Backup {
         return true;
     }
 
-    synchronized static boolean deleteDirectory(){
+    static boolean deleteDirectory(){
         File directory = new File(Backup.dir);
 
         File[] files = directory.listFiles();

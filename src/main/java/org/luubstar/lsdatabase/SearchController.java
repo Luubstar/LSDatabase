@@ -27,7 +27,7 @@ public class SearchController implements SidePanel {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        original = Database.tablas.getFirst();
+        original = Database.actual;
         createTableview(original);
     }
 
