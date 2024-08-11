@@ -1,47 +1,63 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
-import org.luubstar.lsdatabase.App;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.processing.Generated;
 import java.io.File;
-import java.security.InvalidParameterException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-    private static final Logger logger = LoggerFactory.getLogger(App.class);
+    private static final Logger logger = LoggerFactory.getLogger(Database.class);
     private static String databaseURL;
     private static final String tableName = "Clientes";
-    public static List<Tabla> tablas = new ArrayList<>();
     public static Tabla actual;
-    protected static File actualFile;
+    public static final String DEFAULT = "base.db";
+    static File actualFile;
+    static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/defaultBase.db";
 
-    private static Connection connectToDb() throws SQLException{
+    @Generated("Constructor privado")
+    private Database(){}
+
+    public static void loadFile(String s) {
+        actualFile = new File(s);
+        if(actualFile.exists() && actualFile.isFile() && actualFile.canRead()){
+            databaseURL = "jdbc:sqlite:" + s;}
+        else{
+            File f = new File(PLANTILLA);
+            try{Files.copy(f.toPath(),Path.of("./" + s));}
+            catch (Exception e){logger.error("Error copiando el fichero ",e);}
+        }
+    }
+
+    static void disconect(){
+        actualFile = null;
+        actual = null;
+        databaseURL = null;
+    }
+
+    public static void updateTables(){
+        try(Connection conn = connectToDb()) {
+            Tabla t = Tabla.createEmpty(tableName);
+            t.generateTable(conn);
+            actual = t;
+        }
+        catch (Exception e){logger.error("Error en la inicialización", e);}
+    }
+
+    static Connection connectToDb() throws SQLException{
         try{return DriverManager.getConnection(databaseURL);}
         catch (SQLException e){logger.error("Error contectanse con la base de datos {}", databaseURL, e); throw e;}
     }
 
     public static void start() throws InstantiationException {
         if(databaseURL == null){throw new InstantiationException("Database can't be null");}
-        try(Connection conn = connectToDb()) {
-            Tabla t = Tabla.createEmpty(tableName);
-            t.generateTable(conn);
-            tablas.add(t);
-            actual = selectTable(0);
-
-            Backup.makeBackup();
-        }
-        catch (Exception e){logger.error("Error en la inicialización", e); throw new InstantiationException();}
-    }
-
-    public static Tabla selectTable(int i){return tablas.get(i);}
-
-    public static void loadFile(String s) throws InvalidParameterException{
-        actualFile = new File(s);
-        if(actualFile.exists() && actualFile.isFile() && actualFile.canRead()){
-            databaseURL = "jdbc:sqlite:" + s;}
-        else{throw new InvalidParameterException("Not a file " + actualFile.getAbsolutePath());}
+        updateTables();
+        try{Backup.makeBackup();}
+        catch (Exception e){logger.error("Error creando el backup ", e);}
     }
 
     public static Tabla searchLike(Tabla original, String s) {
@@ -77,11 +93,6 @@ public class Database {
 
     public static void delete(Tabla tabla, String ID) {
         try (Connection conn = connectToDb()) {
-            String foreignKeySupport = "PRAGMA foreign_keys = ON;";
-            try (PreparedStatement stmt = conn.prepareStatement(foreignKeySupport)) {
-                stmt.execute();
-            }
-
             String query = Queries.deleteQuery(tabla);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, ID);
@@ -107,7 +118,29 @@ public class Database {
         }
     }
 
+    public static void clear(Tabla tabla){
+        try (Connection conn = connectToDb()) {
+            String query = Queries.dropQuery(tabla);
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.executeUpdate();
+            }
+
+            query = "DELETE FROM sqlite_sequence WHERE name='" + tabla.nombre()+"'";
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {logger.error("Error dropeando la tabla ", e);}
+    }
+
     public static int entries(Tabla tab){
-        return tab.columnas().getFirst().valores().size();
+        try {
+            if (tab.columnas().isEmpty()) {
+                return 0;
+            }
+            return tab.columnas().getFirst().valores().size();
+        }
+        catch (Exception e){logger.error("Error en el calculo de entradas ", e);}
+
+        return -1;
     }
 }

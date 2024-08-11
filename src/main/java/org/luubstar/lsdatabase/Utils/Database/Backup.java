@@ -3,6 +3,7 @@ package org.luubstar.lsdatabase.Utils.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.processing.Generated;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,21 +15,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Backup {
 
-    private static final String dir = "backups";
-    private static final int daysBetweenBackup = 7;
-    private static final int maxBackups = 4;
+public final class Backup {
+
+    static final String DIR = "backups";
+    static final int daysBetweenBackup = 7;
+    static final int maxBackups = 4;
     private static final Logger logger = LoggerFactory.getLogger(Backup.class);
-    protected static void makeBackup() throws IOException {
+
+    @Generated("Constructor privado")
+    private Backup(){}
+
+    static String makeDataString(){
+        LocalDate localDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return localDate.format(formatter);
+    }
+
+     static void makeBackup() throws IOException {
         if(createDirectory()){
-            File backup = new File(dir + "/backup_" + LocalDate.now() + ".db");
-            if(!backup.exists() && lastBackupDate() >= daysBetweenBackup) {createBackupFile();}
+            File backup = new File(DIR + "/backup_" + makeDataString() + ".db");
+            if(!backup.exists() && lastBackupDate(DIR) >= daysBetweenBackup) {createBackupFile(Backup.DIR);}
         }
     }
 
-    private static int lastBackupDate() throws IOException {
-        File d =  new File(dir);
+    static int lastBackupDate(String dir_) throws IOException {
+        File d =  new File(dir_);
         File[] backups = d.listFiles();
         if (backups == null) {
             throw new IOException("Error al leer los ficheros de la carpeta de backups");
@@ -48,14 +60,10 @@ public class Backup {
         return (int) ChronoUnit.DAYS.between(Date, LocalDate.now());
     }
 
-    private static void createBackupFile() throws IOException {
-        File d =  new File(dir);
+    static void createBackupFile(String dir_) throws IOException {
+        File d = new File(dir_);
 
-        LocalDate localDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String dateString = localDate.format(formatter);
-
-        Files.copy(Database.actualFile.toPath(), Path.of(dir + "/backup_" + dateString + ".db"));
+        Files.copy(Database.actualFile.toPath(), Path.of(dir_ + "/backup_" + makeDataString() + ".db"));
 
         File[] backups = d.listFiles();
         if (backups == null) {
@@ -69,14 +77,30 @@ public class Backup {
         }
     }
 
-    private static boolean createDirectory(){
-        File d = new File(dir);
+    static boolean createDirectory(){
+        File d = new File(DIR);
 
         if(!d.exists()){
-            if(d.mkdir()){logger.debug("La carpeta backups ha sido creada");}
-            else{logger.debug("La carpeta backups no pudo ser creada"); return false;}
+            if(!d.mkdir()){logger.debug("La carpeta backups no pudo ser creada"); return false;}
         }
 
+        return true;
+    }
+
+    static boolean deleteDirectory(){
+        File directory = new File(Backup.DIR);
+
+        File[] files = directory.listFiles();
+
+        if(files != null){
+            for(File f : files){
+                if(!f.delete()){logger.error("Error limpiando ficheros");}
+            }
+        }
+
+        if(directory.exists() && directory.isDirectory()) {
+            return directory.delete();
+        }
         return true;
     }
 }

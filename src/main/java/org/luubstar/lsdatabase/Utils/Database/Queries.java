@@ -1,8 +1,13 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
+import javax.annotation.processing.Generated;
 import java.util.List;
 
 public class Queries {
+
+    @Generated("Constructor privado")
+    private Queries(){}
+
     protected static String searchQuery(Tabla t, String s){
         StringBuilder query = new StringBuilder("SELECT * FROM " + t.nombre() + " WHERE ");
         for (int i = 0; i < t.columnas().size(); i++) {
@@ -49,6 +54,8 @@ public class Queries {
         query.append(" WHERE ID = ? ");
         return query.toString();
     }
+
+    protected static String dropQuery(Tabla t){return "DELETE FROM " + t.nombre();}
 
     protected static String columnMetadataQuery(Tabla t){return "PRAGMA table_info(" + t.nombre() + ")";}
 }

@@ -37,7 +37,7 @@ public class App extends Application {
 
     private static void preloads(){
         try{
-            Database.loadFile("base.db");
+            Database.loadFile(Database.DEFAULT);
             Database.start();
         }
         catch (Exception e){logger.error("Error fatal en la inicialización de la base de datos ", e); System.exit(1);}
