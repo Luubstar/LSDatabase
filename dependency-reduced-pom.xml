@@ -89,6 +89,25 @@
             <goals>
               <goal>report</goal>
             </goals>
+            <configuration>
+              <excludes>
+                <exclude>**/ChangePanel.class</exclude>
+                <exclude>**/Dropzone.class</exclude>
+                <exclude>**/Panel.class</exclude>
+                <exclude>**/Popup.class</exclude>
+                <exclude>**/App.class</exclude>
+                <exclude>**/Main.class</exclude>
+                <exclude>**/Updater/*</exclude>
+                <exclude>**/UpdaterMain.class</exclude>
+                <exclude>**/DataFile.class</exclude>
+                <exclude>**/Notification.class</exclude>
+                <exclude>**/AddController.class</exclude>
+                <exclude>**/DashboardController.class</exclude>
+                <exclude>**/MainController.class</exclude>
+                <exclude>**/RecordatoriosController.class</exclude>
+                <exclude>**/SearchController.class</exclude>
+              </excludes>
+            </configuration>
           </execution>
         </executions>
       </plugin>
