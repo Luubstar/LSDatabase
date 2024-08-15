@@ -12,24 +12,29 @@ import java.util.List;
 
 public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
-    private static String databaseURL;
+    public static final String DEFAULT = "file.lsdata";
     private static final String tableName = "Clientes";
+    static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/file.lsdata";
+    private static String databaseURL;
     public static Tabla actual;
-    public static final String DEFAULT = "base.db";
+    static DataFile file;
     static File actualFile;
-    static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/defaultBase.db";
 
     @Generated("Constructor privado")
     private Database(){}
 
     public static void loadFile(String s) {
-        actualFile = new File(s);
-        if(actualFile.exists() && actualFile.isFile() && actualFile.canRead()){
-            databaseURL = "jdbc:sqlite:" + s;}
-        else{
+        try {
+            file = new DataFile(s);
+            actualFile = file.getDatabase();
+            logger.debug(actualFile.getAbsolutePath());
+            databaseURL = "jdbc:sqlite:" + file.getDatabase().getAbsolutePath().replace("\\", "/");
+        }
+        catch (Exception inv){
             File f = new File(PLANTILLA);
             try{Files.copy(f.toPath(),Path.of("./" + s));}
             catch (Exception e){logger.error("Error copiando el fichero ",e);}
+            loadFile(s);
         }
     }
 

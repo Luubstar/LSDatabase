@@ -13,7 +13,6 @@ import java.util.Objects;
 
 public class App extends Application {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
-
     @Override
     public void start(Stage stage) throws IOException {
         try {
