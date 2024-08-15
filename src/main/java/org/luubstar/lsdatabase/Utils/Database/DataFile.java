@@ -17,8 +17,8 @@ public class DataFile {
     File file;
     File dest;
 
-    private File database;
-    private File data;
+    private final File database;
+    private final File data;
 
     DataFile(String path) throws InvalidParameterException, IOException{
             file = new File(path);
@@ -28,8 +28,12 @@ public class DataFile {
                 database = new File(dest.getAbsolutePath() + "/defaultBase.db");
                 data = new File(dest.getAbsolutePath() + "/data");
 
-                if(!database.exists() || !data.exists()){
-                    throw new InvalidParameterException("El fichero está corrupto, no existe data o db");
+                if(!database.exists()){
+                    throw new InvalidParameterException("La db no existe en " + path);
+                }
+
+                if(!data.exists()){
+                    throw new InvalidParameterException("La carpeta data no existe en " + path);
                 }
 
                 logger.debug("Datafile leida correctamente en {}", dest);

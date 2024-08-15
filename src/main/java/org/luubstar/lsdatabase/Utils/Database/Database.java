@@ -31,10 +31,10 @@ public class Database {
             databaseURL = "jdbc:sqlite:" + file.getDatabase().getAbsolutePath().replace("\\", "/");
         }
         catch (Exception inv){
+            logger.error("Error leyendo el fichero {}", s, inv);
             File f = new File(PLANTILLA);
-            try{Files.copy(f.toPath(),Path.of("./" + s));}
+            try{Files.copy(f.toPath(),Path.of("./" + s)); loadFile(s);}
             catch (Exception e){logger.error("Error copiando el fichero ",e);}
-            loadFile(s);
         }
     }
 
