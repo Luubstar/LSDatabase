@@ -35,6 +35,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -152,4 +155,26 @@
          </BorderPane.margin>
       </HBox>
    </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Archivo">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#open" text="Abrir" />
+                  <MenuItem mnemonicParsing="false" onAction="#save" text="Guardar" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Guardar como" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Pestañas">
+               <items>
+                  <MenuItem fx:id="pInicio" mnemonicParsing="false" text="Inicio" />
+                  <MenuItem fx:id="pBuscar" mnemonicParsing="false" text="Buscar" />
+                  <MenuItem fx:id="pAdd" mnemonicParsing="false" text="Añadir" />
+                  <MenuItem fx:id="pFacturar" mnemonicParsing="false" text="Facturar" />
+                  <MenuItem fx:id="pRecordatorios" mnemonicParsing="false" text="Recordatorios" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
 </BorderPane>

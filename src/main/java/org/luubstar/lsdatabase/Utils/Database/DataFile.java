@@ -14,7 +14,7 @@ import java.util.zip.ZipInputStream;
 
 public class DataFile {
     private static final Logger logger = LoggerFactory.getLogger(DataFile.class);
-    File file;
+    final File file;
     File dest;
 
     private final File database;
@@ -42,6 +42,12 @@ public class DataFile {
             else {
                 throw new InvalidParameterException("Fichero no existente");
             }
+    }
+
+    public void save(){save(file);}
+
+    public void save(File f){
+
     }
 
     void extractZip(String path) throws IOException {

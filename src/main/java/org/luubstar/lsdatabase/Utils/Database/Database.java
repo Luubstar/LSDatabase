@@ -17,7 +17,7 @@ public class Database {
     static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/file.lsdata";
     private static String databaseURL;
     public static Tabla actual;
-    static DataFile file;
+    public static DataFile file;
     static File actualFile;
 
     @Generated("Constructor privado")
@@ -38,7 +38,7 @@ public class Database {
         }
     }
 
-    static void disconect(){
+    public static void disconect(){
         actualFile = null;
         actual = null;
         databaseURL = null;
