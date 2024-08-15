@@ -107,7 +107,7 @@ public class MainController implements Initializable {
                 Database.loadFile(selectedFile.getPath());
                 Database.start();
 
-                ((SearchController) ChangePanel.getController(Panel.BUSQUEDA)).createTableview(Database.actual);
+                ((SearchController) ChangePanel.getController(Panel.BUSQUEDA)).search();
             } else {
                 logger.info("Dialogo de selección cerrado");
             }
