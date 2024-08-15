@@ -3,7 +3,10 @@ package org.luubstar.lsdatabase;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.luubstar.lsdatabase.Utils.Database.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +32,7 @@ public class App extends Application {
             stage.setMinHeight(700);
 
             stage.setScene(scene);
+            stage.setOnCloseRequest(this::handleWindowClose);
             stage.show();
         }
         catch (Exception e){logger.error("Se ha detectado un error en el inicio ", e);}
@@ -44,4 +48,23 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    private void handleWindowClose(WindowEvent event) {
+        if (Database.unsaved) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Datos no guardados");
+            alert.setHeaderText("Tienes datos sin guardar");
+            alert.setContentText("¿Quieres guardar y salir?");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                Database.unsaved = false;
+                Database.file.save();
+            }
+            else{
+                event.consume();
+            }
+        }
+    }
+
+
 }

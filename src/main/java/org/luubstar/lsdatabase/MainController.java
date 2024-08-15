@@ -119,6 +119,7 @@ public class MainController implements Initializable {
 
     public void save(){
         Database.file.save();
+        Database.unsaved = false;
     }
 
     public void saveAs(){
@@ -136,8 +137,8 @@ public class MainController implements Initializable {
 
             if (selectedFile != null) {
                 logger.info("Guardando fichero {}", selectedFile);
-
                 Database.file.save(selectedFile);
+                Database.unsaved = false;
             } else {
                 logger.info("Dialogo de guardado cerrado");
             }

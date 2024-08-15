@@ -20,6 +20,8 @@ public class Database {
     public static DataFile file;
     static File actualFile;
 
+    public static boolean unsaved = false;
+
     @Generated("Constructor privado")
     private Database(){}
 
@@ -59,6 +61,7 @@ public class Database {
     }
 
     public static void start() throws InstantiationException {
+        unsaved = false;
         if(databaseURL == null){throw new InstantiationException("Database can't be null");}
         updateTables();
         try{Backup.makeBackup();}
@@ -84,6 +87,7 @@ public class Database {
     }
 
     public static void add(Tabla tabla, List<String> valores) {
+        unsaved = true;
         try (Connection conn = connectToDb()) {
             String query = Queries.addQuery(tabla, valores);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -97,6 +101,7 @@ public class Database {
     }
 
     public static void delete(Tabla tabla, String ID) {
+        unsaved = true;
         try (Connection conn = connectToDb()) {
             String query = Queries.deleteQuery(tabla);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -108,6 +113,7 @@ public class Database {
     }
 
     public static void update(Tabla tabla, List<String> valores, String ID) {
+        unsaved = true;
         try (Connection conn = connectToDb()) {
             String query = Queries.updateQuery(tabla);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -124,6 +130,7 @@ public class Database {
     }
 
     public static void clear(Tabla tabla){
+        unsaved = true;
         try (Connection conn = connectToDb()) {
             String query = Queries.dropQuery(tabla);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {

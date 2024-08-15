@@ -10,6 +10,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import org.luubstar.lsdatabase.Utils.Database.Database;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +22,8 @@ public class DashboardController implements SidePanel {
     GridPane pane;
 
     private final IntegerProperty clientsInDB = new SimpleIntegerProperty();
+
+    private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,7 +43,12 @@ public class DashboardController implements SidePanel {
 
     @Override
     public void start() {
-        clientsInDB.set(Database.entries(Database.actual));
+        try{
+            //TODO: mejorar rendimiento
+            Database.start();
+            clientsInDB.set(Database.entries(Database.actual));
+        }
+        catch (Exception e){logger.error("Error recargando tamaño", e);}
     }
 
 }
