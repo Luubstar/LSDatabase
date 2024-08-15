@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static org.luubstar.lsdatabase.App.writeLast;
+
 public class MainController implements Initializable {
 
     @FXML
@@ -105,9 +107,10 @@ public class MainController implements Initializable {
                 logger.info("Cargando fichero {}", selectedFile);
                 Database.disconect();
                 Database.loadFile(selectedFile.getPath());
+                writeLast(selectedFile.getPath());
                 Database.start();
 
-                ((SearchController) ChangePanel.getController(Panel.BUSQUEDA)).createTableview(Database.actual);
+                ((SearchController) ChangePanel.getController(Panel.BUSQUEDA)).search();
             } else {
                 logger.info("Dialogo de selección cerrado");
             }
@@ -141,6 +144,34 @@ public class MainController implements Initializable {
                 Database.unsaved = false;
             } else {
                 logger.info("Dialogo de guardado cerrado");
+            }
+        }
+        catch (Exception e){
+            logger.error("Error en la lectura ", e);
+        }
+    }
+
+    public void newfile(){
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Crear archivo");
+            fileChooser.setInitialDirectory(new File(new File(MainController.class.getProtectionDomain().getCodeSource().getLocation()
+                    .toURI()).getPath()));
+
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Archivos de datos", "*.lsdata")
+            );
+
+            File selectedFile = fileChooser.showSaveDialog(button_Inicio.getScene().getWindow());
+
+            if (selectedFile != null) {
+                logger.info("Creando fichero {}", selectedFile);
+                Database.createNew(selectedFile.getAbsolutePath().replace("\\", "/"));
+                Database.loadFile(selectedFile.getAbsolutePath().replace("\\", "/"));
+                Database.start();
+                Database.unsaved = false;
+            } else {
+                logger.info("Dialogo de creación cerrado");
             }
         }
         catch (Exception e){

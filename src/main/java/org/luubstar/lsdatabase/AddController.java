@@ -95,6 +95,7 @@ public class AddController implements SidePanel {
         }
 
         Popup.notify("Entrada añadida exitosamente");
+        ((SearchController) ChangePanel.getController(Panel.BUSQUEDA)).search();
         clear();
     }
 
