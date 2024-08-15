@@ -31,8 +31,6 @@ public class DataFile {
                     throw new InvalidParameterException("La carpeta data no existe en " + path);
                 }
 
-                logger.debug("Datafile leida correctamente en {}", dest);
-
             }
             else {
                 throw new InvalidParameterException("Fichero no existente");

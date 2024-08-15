@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static org.luubstar.lsdatabase.App.writeLast;
+
 public class MainController implements Initializable {
 
     @FXML
@@ -105,6 +107,7 @@ public class MainController implements Initializable {
                 logger.info("Cargando fichero {}", selectedFile);
                 Database.disconect();
                 Database.loadFile(selectedFile.getPath());
+                writeLast(selectedFile.getPath());
                 Database.start();
 
                 ((SearchController) ChangePanel.getController(Panel.BUSQUEDA)).search();

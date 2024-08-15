@@ -1,5 +1,6 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
+import org.luubstar.lsdatabase.App;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

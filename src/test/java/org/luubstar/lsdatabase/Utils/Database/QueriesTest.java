@@ -10,6 +10,7 @@ public class QueriesTest {
     void clear(){
         Database.disconect();
         Database.loadFile(Database.PLANTILLA);
+
         try{Database.start();}
         catch (Exception e){
             Assertions.fail("Error iniciando la base de datos");}

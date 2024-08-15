@@ -11,11 +11,13 @@ import org.luubstar.lsdatabase.Utils.Database.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 
 public class App extends Application {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
+    private static final String CACHEFILE = "last.txt";
+    static Stage st;
     @Override
     public void start(Stage stage) throws IOException {
         try {
@@ -34,13 +36,21 @@ public class App extends Application {
             stage.setScene(scene);
             stage.setOnCloseRequest(this::handleWindowClose);
             stage.show();
+            st = stage;
         }
         catch (Exception e){logger.error("Se ha detectado un error en el inicio ", e);}
     }
 
     private static void preloads(){
         try{
-            Database.loadFile(Database.DEFAULT);
+            File last = new File(CACHEFILE);
+            if(!last.exists()) {
+                Database.loadFile(Database.DEFAULT);
+                writeLast(Database.DEFAULT);
+            }
+            else{
+                Database.loadFile(readLast());
+            }
             Database.start();
         }
         catch (Exception e){logger.error("Error fatal en la inicialización de la base de datos ", e); System.exit(1);}
@@ -66,5 +76,17 @@ public class App extends Application {
         }
     }
 
+    public static void writeLast(String route) throws IOException {
+        FileOutputStream f = new FileOutputStream(CACHEFILE);
+        f.write(route.getBytes());
+        f.close();
+    }
+
+    private static String readLast() throws IOException {
+        FileInputStream f = new FileInputStream(CACHEFILE);
+        String res = new String(f.readAllBytes());
+        f.close();
+        return res;
+    }
 
 }
