@@ -161,6 +161,11 @@
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#newfile" text="Nuevo">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
               <MenuItem mnemonicParsing="false" onAction="#open" text="Abrir">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
