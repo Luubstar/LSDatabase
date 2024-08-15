@@ -12,28 +12,35 @@ import java.util.List;
 
 public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
-    private static String databaseURL;
+    public static final String DEFAULT = "file.lsdata";
     private static final String tableName = "Clientes";
+    static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/file.lsdata";
+    private static String databaseURL;
     public static Tabla actual;
-    public static final String DEFAULT = "base.db";
+    public static DataFile file;
     static File actualFile;
-    static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/defaultBase.db";
+
+    public static boolean unsaved = false;
 
     @Generated("Constructor privado")
     private Database(){}
 
     public static void loadFile(String s) {
-        actualFile = new File(s);
-        if(actualFile.exists() && actualFile.isFile() && actualFile.canRead()){
-            databaseURL = "jdbc:sqlite:" + s;}
-        else{
+        try {
+            file = new DataFile(s);
+            actualFile = file.getDatabase();
+            logger.debug(actualFile.getAbsolutePath());
+            databaseURL = "jdbc:sqlite:" + file.getDatabase().getAbsolutePath().replace("\\", "/");
+        }
+        catch (Exception inv){
+            logger.error("Error leyendo el fichero {}", s, inv);
             File f = new File(PLANTILLA);
-            try{Files.copy(f.toPath(),Path.of("./" + s));}
+            try{Files.copy(f.toPath(),Path.of("./" + s)); loadFile(s);}
             catch (Exception e){logger.error("Error copiando el fichero ",e);}
         }
     }
 
-    static void disconect(){
+    public static void disconect(){
         actualFile = null;
         actual = null;
         databaseURL = null;
@@ -54,6 +61,7 @@ public class Database {
     }
 
     public static void start() throws InstantiationException {
+        unsaved = false;
         if(databaseURL == null){throw new InstantiationException("Database can't be null");}
         updateTables();
         try{Backup.makeBackup();}
@@ -79,6 +87,7 @@ public class Database {
     }
 
     public static void add(Tabla tabla, List<String> valores) {
+        unsaved = true;
         try (Connection conn = connectToDb()) {
             String query = Queries.addQuery(tabla, valores);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -92,6 +101,7 @@ public class Database {
     }
 
     public static void delete(Tabla tabla, String ID) {
+        unsaved = true;
         try (Connection conn = connectToDb()) {
             String query = Queries.deleteQuery(tabla);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -103,6 +113,7 @@ public class Database {
     }
 
     public static void update(Tabla tabla, List<String> valores, String ID) {
+        unsaved = true;
         try (Connection conn = connectToDb()) {
             String query = Queries.updateQuery(tabla);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -119,6 +130,7 @@ public class Database {
     }
 
     public static void clear(Tabla tabla){
+        unsaved = true;
         try (Connection conn = connectToDb()) {
             String query = Queries.dropQuery(tabla);
             try (PreparedStatement stmt = conn.prepareStatement(query)) {

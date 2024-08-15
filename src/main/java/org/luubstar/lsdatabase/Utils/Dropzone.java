@@ -1,4 +1,4 @@
-package org.luubstar.lsdatabase.Utils.Database;
+package org.luubstar.lsdatabase.Utils;
 
 import javafx.scene.Cursor;
 import javafx.scene.Node;
