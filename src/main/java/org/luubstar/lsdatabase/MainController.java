@@ -104,13 +104,7 @@ public class MainController implements Initializable {
             File selectedFile = fileChooser.showOpenDialog(button_Inicio.getScene().getWindow());
 
             if (selectedFile != null) {
-                logger.info("Cargando fichero {}", selectedFile);
-                Database.disconect();
-                Database.loadFile(selectedFile.getPath());
-                writeLast(selectedFile.getPath());
-                Database.start();
-
-                ((SearchController) ChangePanel.getController(Panel.BUSQUEDA)).search();
+               open(selectedFile.getAbsolutePath());
             } else {
                 logger.info("Dialogo de selección cerrado");
             }
@@ -118,6 +112,17 @@ public class MainController implements Initializable {
         catch (Exception e){
             logger.error("Error en la lectura ", e);
         }
+    }
+
+    public void open(String s) throws IOException, InstantiationException {
+        File selectedFile = new File(s);
+        logger.info("Cargando fichero {}", selectedFile);
+        Database.disconect();
+        Database.loadFile(selectedFile.getPath());
+        writeLast(selectedFile.getPath());
+        Database.start();
+
+        ((SearchController) ChangePanel.getController(Panel.BUSQUEDA)).search();
     }
 
     public void save(){
