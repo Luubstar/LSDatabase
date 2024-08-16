@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.luubstar.lsdatabase.Utils.ChangePanel;
 import org.luubstar.lsdatabase.Utils.Database.Database;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ public class App extends Application {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final String CACHEFILE = "last.txt";
     static Stage st;
+    static String[] appargs;
+
     @Override
     public void start(Stage stage) throws IOException {
         try {
@@ -37,6 +40,15 @@ public class App extends Application {
             stage.setOnCloseRequest(this::handleWindowClose);
             stage.show();
             st = stage;
+
+            if(appargs.length > 0){
+                StringBuilder s = new StringBuilder();
+                for(String arg : appargs){
+                    s.append(arg).append(" ");
+                }
+                logger.debug("Abriendo {}", s.toString());
+                ChangePanel.getNavigator().open(s.toString());
+            }
         }
         catch (Exception e){logger.error("Se ha detectado un error en el inicio ", e);}
     }
@@ -55,7 +67,10 @@ public class App extends Application {
         }
         catch (Exception e){logger.error("Error fatal en la inicialización de la base de datos ", e); System.exit(1);}
     }
+
     public static void main(String[] args) {
+        logger.debug("Archivos pasados en main {}", args.length);
+        appargs = args;
         launch();
     }
 
