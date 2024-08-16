@@ -33,7 +33,7 @@ public class DatabaseTest {
         File f = new File(Database.PLANTILLA);
 
         Assertions.assertNotNull(f);
-        Assertions.assertEquals(Database.actualFile,f,"La lectura de la plantilla de la base de datos causa error");
+        Assertions.assertEquals(Database.file.file,f,"La lectura de la plantilla de la base de datos causa error");
     }
 
     @Test
