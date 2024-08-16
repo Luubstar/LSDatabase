@@ -30,7 +30,6 @@ public class AddController implements SidePanel {
     Button button_delete;
     @FXML
     Button button_save;
-
     final BooleanProperty isEditing = new SimpleBooleanProperty(false);
 
     FormRenderer renderer;
@@ -61,7 +60,7 @@ public class AddController implements SidePanel {
 
         pane.getChildren().setAll(renderer);
 
-        addDropZone();
+        if(!datos.isEmpty()){addDropZone(datos.getFirst());}
         button_save.disableProperty().bind(f.validProperty().not());
         editing(true);
     }
@@ -128,18 +127,20 @@ public class AddController implements SidePanel {
         return res;
     }
 
-    private void addDropZone(){
+    private void addDropZone(String index){
         Label titulo = new Label("Ficheros");
-        Label l = new Label("");
+        VBox Drop = new VBox();
 
-        l.getStyleClass().add("dropzone");
-        l.setPrefSize(380, 0);
+        Drop.getStyleClass().add("dropzone");
+        Drop.setPrefSize(380, 0);
 
-        l.setOnDragOver(event -> Dropzone.configureZone(l, event));
-        l.setOnDragEntered(event -> {Dropzone.setOnEntered(l,event); l.setText("+");});
-        l.setOnDragExited(event -> {Dropzone.setOnExit(l,event); l.setText("");});
-        l.setOnDragDropped(Dropzone::fileDropped);
+        Dropzone.generateText(Drop, index);
+        Drop.setOnDragOver(event -> Dropzone.configureZone(Drop, event));
+        Drop.setOnDragEntered(event -> Dropzone.setOnEntered(Drop,event));
+        Drop.setOnDragExited(event -> {Dropzone.setOnExit(Drop,event); Dropzone.generateText(Drop, index);});
+        Drop.setOnDragDropped(event -> Dropzone.fileDropped(Drop, event, index));
 
-        pane.getChildren().addAll(titulo, l);
+        pane.getChildren().addAll(titulo, Drop);
     }
+
 }
