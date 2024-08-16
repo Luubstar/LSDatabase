@@ -30,6 +30,8 @@ public class Zip {
 
     private static void createFile(File dest, ZipEntry entry, ZipInputStream zip) throws IOException {
         File newFile = newFile(dest, entry);
+        newFile.deleteOnExit();
+
         byte[] buffer = new byte[1024];
         if (entry.isDirectory()) {
             if (!newFile.isDirectory() && !newFile.mkdirs()) {

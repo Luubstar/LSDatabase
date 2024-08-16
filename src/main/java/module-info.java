@@ -10,6 +10,7 @@ module org.luubstar.lsdatabase {
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
     requires java.compiler;
+    requires java.desktop;
 
     opens org.luubstar.lsdatabase to javafx.fxml;
     opens org.luubstar.lsdatabase.Utils.Updater to javafx.fxml;
