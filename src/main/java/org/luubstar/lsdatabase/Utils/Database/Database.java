@@ -1,6 +1,5 @@
 package org.luubstar.lsdatabase.Utils.Database;
 
-import org.luubstar.lsdatabase.App;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ public class Database {
         }
         catch (Exception inv){
             logger.error("Error leyendo el fichero {}", s, inv);
-            createNew("./" + s);
+            createNew(s);
         }
     }
 
