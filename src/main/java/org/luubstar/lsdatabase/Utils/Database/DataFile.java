@@ -5,6 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 
@@ -30,11 +34,26 @@ public class DataFile {
                 if(!data.exists()){
                     throw new InvalidParameterException("La carpeta data no existe en " + path);
                 }
-
             }
             else {
                 throw new InvalidParameterException("Fichero no existente");
             }
+    }
+
+    public static void copyResource(String resourceFileName, String destinationFilePath) {
+        logger.debug("Copiando: {}", resourceFileName);
+        Path target = Path.of(destinationFilePath);
+
+        try (InputStream inputStream = DataFile.class.getResourceAsStream(resourceFileName)) {
+            if (inputStream == null) {
+                throw new IllegalArgumentException("El archivo " + resourceFileName + " no se encuentra en el jar.");
+            }
+
+            Files.copy(inputStream, target, StandardCopyOption.REPLACE_EXISTING);
+            logger.debug("Archivo copiado desde el JAR a {}", destinationFilePath);
+        } catch (IOException e) {
+            logger.error("Error copiando fichero en JAR", e);
+        }
     }
 
     public void save(){save(file);}

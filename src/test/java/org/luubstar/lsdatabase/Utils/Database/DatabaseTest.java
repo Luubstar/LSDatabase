@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class DatabaseTest {
     @Test
     void testLoadToDB(){
         Database.loadFile("123");
-        Assertions.assertTrue(new File("123").exists());
+        Assertions.assertTrue(Files.exists(Path.of("123")));
 
         new File("123").delete();
 

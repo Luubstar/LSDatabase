@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.processing.Generated;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.*;
 import java.util.List;
 
@@ -15,6 +13,7 @@ public class Database {
     public static final String DEFAULT = "file.lsdata";
     private static final String tableName = "Clientes";
     static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/file.lsdata";
+    static final String PLANTILLASOURCE = "/org/luubstar/lsdatabase/Utils/file.lsdata";
     private static String databaseURL;
     public static Tabla actual;
     public static DataFile file;
@@ -28,19 +27,22 @@ public class Database {
     public static void loadFile(String s) {
         try {
             file = new DataFile(s);
+            logger.debug(s);
             actualFile = file.getDatabase();
-            logger.debug(actualFile.getAbsolutePath());
             databaseURL = "jdbc:sqlite:" + file.getDatabase().getAbsolutePath().replace("\\", "/");
         }
         catch (Exception inv){
             logger.error("Error leyendo el fichero {}", s, inv);
             createNew(s);
+            loadFile(s);
         }
     }
 
     public static void createNew(String s){
-        File f = new File(PLANTILLA);
-        try{Files.copy(f.toPath(),Path.of(s)); loadFile(s);}
+        try{
+            logger.debug("Creando nuevo");
+            DataFile.copyResource(PLANTILLASOURCE,s);
+        }
         catch (Exception e){logger.error("Error copiando el fichero ",e);}
     }
 

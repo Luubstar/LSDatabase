@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class App extends Application {
@@ -40,27 +41,33 @@ public class App extends Application {
             stage.setOnCloseRequest(this::handleWindowClose);
             stage.show();
             st = stage;
-
-            if(appargs.length > 0){
-                StringBuilder s = new StringBuilder();
-                for(String arg : appargs){
-                    s.append(arg).append(" ");
-                }
-                logger.debug("Abriendo {}", s.toString());
-                ChangePanel.getNavigator().open(s.toString());
-            }
         }
         catch (Exception e){logger.error("Se ha detectado un error en el inicio ", e);}
     }
 
     private static void preloads(){
         try{
-            File last = new File(CACHEFILE);
-            if(!last.exists()) {
+            FileInputStream f = new FileInputStream(CACHEFILE);
+            String r = new String(f.readAllBytes());
+            f.close();
+
+            File last = new File(r);
+            if(appargs.length > 0 && !appargs[0].trim().isEmpty()){
+                logger.debug(Arrays.toString(appargs), appargs.length, appargs[0]);
+                StringBuilder s = new StringBuilder();
+                for(String arg : appargs){
+                    s.append(arg).append(" ");
+                }
+                logger.debug("Abriendo {}", s);
+                ChangePanel.getNavigator().open(s.toString());
+            }
+            else if(!last.exists()) {
+                logger.debug("Copiando default");
                 Database.loadFile(Database.DEFAULT);
                 writeLast(Database.DEFAULT);
             }
             else{
+                logger.debug("Leyendo el último fichero");
                 Database.loadFile(readLast());
             }
             Database.start();

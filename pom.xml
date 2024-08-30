@@ -127,15 +127,18 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <id>default-cli</id>
+                        <id>create-runtime-image</id>
+                        <goals>
+                            <goal>jlink</goal>
+                        </goals>
                         <configuration>
-                            <mainClass>org.luubstar.lsdatabase/org.luubstar.lsdatabase.App</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
-                            <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
+                            <compress>2</compress>
                             <noHeaderFiles>true</noHeaderFiles>
+                            <noManPages>true</noManPages>
+                            <launcher>app</launcher>
+                            <jlinkImageName>app</jlinkImageName>
+                            <jlinkZipName>app</jlinkZipName>
                         </configuration>
                     </execution>
                 </executions>
@@ -176,6 +179,24 @@
                                     <mainClass>org.luubstar.lsdatabase.Utils.Updater.UpdaterMain</mainClass>
                                 </transformer>
                             </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeScope>runtime</includeScope>
                         </configuration>
                     </execution>
                 </executions>
