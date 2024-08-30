@@ -34,7 +34,7 @@ public final class Backup {
 
      static void makeBackup() throws IOException {
         if(createDirectory()){
-            File backup = new File(DIR + "/backup_" + makeDataString() + ".db");
+            File backup = new File(DIR + "/backup_" + makeDataString() + ".lsdata");
             if(!backup.exists() && lastBackupDate(DIR) >= daysBetweenBackup) {createBackupFile(Backup.DIR);}
         }
     }
@@ -52,7 +52,7 @@ public final class Backup {
         Collections.sort(fileList);
         fileList = fileList.reversed();
 
-        String StringDate = fileList.getFirst().getName().replace("backup_", "").replace(".db", "");
+        String StringDate = fileList.getFirst().getName().replace("backup_", "").replace(".lsdata", "");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate Date = LocalDate.parse(StringDate, formatter);
@@ -63,7 +63,7 @@ public final class Backup {
     static void createBackupFile(String dir_) throws IOException {
         File d = new File(dir_);
 
-        Files.copy(Database.actualFile.toPath(), Path.of(dir_ + "/backup_" + makeDataString() + ".db"));
+        Files.copy(Database.file.file.toPath(), Path.of(dir_ + "/backup_" + makeDataString() + ".lsdata"));
 
         File[] backups = d.listFiles();
         if (backups == null) {

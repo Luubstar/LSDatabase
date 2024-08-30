@@ -15,6 +15,7 @@ public record Tabla(List<Columna> columnas, String nombre) {
 
     public void createColumns(Connection conn) throws SQLException {
         try{
+            if(conn == null){return;}
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(Queries.columnMetadataQuery(this));
             while (rs.next()) {columnas.add(Columna.newFromResultSet(rs));}
