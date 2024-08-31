@@ -6,9 +6,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 
@@ -54,6 +53,23 @@ public class DataFile {
         } catch (IOException e) {
             logger.error("Error copiando fichero en JAR", e);
         }
+    }
+
+    public void delete(String ID) throws IOException {
+        File f = new File(data + "/" + ID);
+        Files.walkFileTree(Path.of(f.getPath()), new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                Files.delete(dir);
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
     public void save(){save(file);}

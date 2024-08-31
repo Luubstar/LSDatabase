@@ -18,6 +18,7 @@ import org.luubstar.lsdatabase.Utils.Database.Tabla;
 import org.luubstar.lsdatabase.Utils.Panel;
 import org.luubstar.lsdatabase.Utils.Popup;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -98,9 +99,10 @@ public class AddController implements SidePanel {
         clear();
     }
 
-    public void delete(){
+    public void delete() throws IOException {
         if(Popup.askForConfirmation("¿Desea eliminar la entrada?")) {
             Database.delete(Database.actual, ID);
+            Database.file.delete(ID);
             clear();
             Popup.notify("Entrada eliminada exitosamente");
             editing(false);
