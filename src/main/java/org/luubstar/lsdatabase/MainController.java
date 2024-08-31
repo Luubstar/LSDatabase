@@ -23,9 +23,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -95,6 +95,18 @@ public class MainController implements Initializable {
         button_Recordatorios.disableProperty().bind(canMove);
 
         setNotificationButton();
+        bell_circle.setVisible(false);
+
+        new Thread(() -> {
+            try {
+                readNotificacion();
+                logger.info("Se están actualizando las notificaciones");
+                Thread.sleep(3600000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+
 
         pInicio.disableProperty().bind(canMove);
         pBuscar.disableProperty().bind(canMove);
@@ -209,29 +221,13 @@ public class MainController implements Initializable {
         notificationMenu.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1;");
 
         ScrollPane scrollPane = new ScrollPane(notificationBox);
-        scrollPane.setPrefSize(250, 200);
+        scrollPane.setPrefSize(250, 400);
         scrollPane.setFitToWidth(true);
         scrollPane.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1;");
 
         MenuItem notificationContainer = new MenuItem(null, scrollPane);
         notificationContainer.getStyleClass().add("notification");
         notificationMenu.getItems().add(notificationContainer);
-
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));
-        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
-
-        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));
 
         Stage primaryStage = App.st;
         button_notificacion.setOnAction(e -> {
@@ -270,9 +266,7 @@ public class MainController implements Initializable {
 
         Button closeButton = new Button("X");
         closeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: red; -fx-font-weight: bold;");
-        closeButton.setOnAction(e -> notificaciones.remove(notification));
-
-        // Agregar el contenido de texto y el botón de cerrar al HBox
+        closeButton.setOnAction(e -> deleteNotification(notification));
         notificationContent.getChildren().addAll(textContent, closeButton);
 
         Button notificationButton = new Button();
@@ -283,7 +277,34 @@ public class MainController implements Initializable {
     }
 
     public void addNotificacion(Notification n){
-        bell_circle.setVisible(true);
-        if(!notificaciones.contains(n)){notificaciones.add(n);}
+        List<String> v = n.getVals();
+        Database.add(Database.notificaciones, v);
+        readNotificacion();
     }
+
+    public void deleteNotification(Notification n){
+        Database.delete(Database.notificaciones, n.getID());
+        readNotificacion();
+    }
+
+    public void readNotificacion() {
+        Database.updateTables();
+        notificaciones.clear();
+        for(int i = 0; i < Database.entries(Database.notificaciones); i++){
+            try {
+                Date f = Notification.sdf.parse(Database.notificaciones.columnas().get(3).valores().get(i));
+                if (f.before(Date.from(Instant.now()))) {
+                    Notification n = new Notification(Database.notificaciones.columnas().get(1).valores().get(i),
+                            Database.notificaciones.columnas().get(2).valores().get(i),
+                            f
+                    );
+                    n.setID(Database.notificaciones.columnas().get(0).valores().get(i));
+                    notificaciones.add(n);
+                    bell_circle.setVisible(true);
+                }
+            }
+            catch (Exception e){logger.error("Error parseando la fecha {}", Database.notificaciones.columnas().get(3).valores().get(i), e);}
+        }
+    }
+
 }
