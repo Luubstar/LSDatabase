@@ -1,1 +1,1 @@
-C:\Users\nbaro\OneDrive\Documentos\Programación\LSDatabase\LSDatabase\file.lsdata
+file.lsdata

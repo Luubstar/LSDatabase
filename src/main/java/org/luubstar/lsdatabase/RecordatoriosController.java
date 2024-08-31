@@ -1,7 +1,6 @@
 package org.luubstar.lsdatabase;
 
 import com.dlsc.formsfx.model.structure.*;
-import com.dlsc.formsfx.model.validators.CustomValidator;
 import com.dlsc.formsfx.view.controls.SimpleRadioButtonControl;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
@@ -33,7 +32,6 @@ public class RecordatoriosController implements SidePanel {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         form = createFrom();
         render(form);
-        button_create.disableProperty().bind(form.validProperty());
     }
 
     public void start(){}
@@ -41,10 +39,9 @@ public class RecordatoriosController implements SidePanel {
     private Form createFrom(){
         return Form.of(
                 Group.of(
-                        Field.ofStringType("").label("Titulo").placeholder("Titulo").required(true),
-                        Field.ofStringType("").label("Mensaje").placeholder("Mensaje").required(true),
-                        Field.ofDate(LocalDate.now()).required(true).label("Fecha").validate(CustomValidator.forPredicate(
-                                d -> !d.isBefore(LocalDate.now()), "La fecha es anterior a hoy")),
+                        Field.ofStringType("").label("Titulo").placeholder("Titulo"),
+                        Field.ofStringType("").label("Mensaje").placeholder("Mensaje"),
+                        Field.ofDate(LocalDate.now()).required(true).label("Fecha"),
                         Field.ofSingleSelectionType(horas, 0)
                                 .label("Hora de envío:")
                                 .render(new SimpleRadioButtonControl<>())
@@ -58,7 +55,7 @@ public class RecordatoriosController implements SidePanel {
         pane.getChildren().add(renderer);
     }
 
-    public void clear(){render(null);}
+    public void clear(){render(createFrom());}
 
     public void create(){
         String titulo = ((StringField) form.getFields().get(0)).getValue();

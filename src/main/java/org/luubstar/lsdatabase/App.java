@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -15,11 +16,12 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 public class App extends Application {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final String CACHEFILE = "last.txt";
-    static Stage st;
+    public static Stage st;
     static String[] appargs;
 
     @Override
@@ -27,6 +29,7 @@ public class App extends Application {
         try {
             logger.info("");
             logger.info("INICIANDO APLICACIÓN\n");
+            st = stage;
             preloads();
 
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
@@ -40,7 +43,6 @@ public class App extends Application {
             stage.setScene(scene);
             stage.setOnCloseRequest(this::handleWindowClose);
             stage.show();
-            st = stage;
         }
         catch (Exception e){logger.error("Se ha detectado un error en el inicio ", e);}
     }
@@ -88,13 +90,29 @@ public class App extends Application {
             alert.setHeaderText("Tienes datos sin guardar");
             alert.setContentText("¿Quieres guardar y salir?");
 
-            if (alert.showAndWait().get() == ButtonType.OK) {
-                Database.unsaved = false;
-                Database.file.save();
+            // Configurar botones personalizados
+            ButtonType saveAndExitButton = new ButtonType("Guardar y salir",ButtonBar.ButtonData.LEFT);
+            ButtonType exitWithoutSavingButton = new ButtonType("Salir sin guardar");
+            ButtonType cancelButton = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(saveAndExitButton, exitWithoutSavingButton, cancelButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent()) {
+                if (result.get() == saveAndExitButton) {
+                    Database.unsaved = false;
+                    Database.file.save();
+                    logger.info("Salido guardando");
+                    System.exit(0);
+                } else if (result.get() == exitWithoutSavingButton) {
+                    logger.info("Salido sin guardar");
+                    System.exit(0);
+                } else {
+                    event.consume();
+                }
             }
-            else{
-                event.consume();
-            }
+
         }
     }
 

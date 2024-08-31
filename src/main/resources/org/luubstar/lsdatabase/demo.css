@@ -42,3 +42,21 @@
     -fx-padding: 70px;
     -fx-alignment: center;
 }
+
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+    -fx-border-width: 0px
+}
+
+.notification {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.notification:hover{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    }
+
+}

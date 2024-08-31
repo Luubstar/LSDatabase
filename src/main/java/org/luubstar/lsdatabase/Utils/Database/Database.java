@@ -12,10 +12,12 @@ public class Database {
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
     public static final String DEFAULT = "file.lsdata";
     private static final String tableName = "Clientes";
+    private static final String notificationName = "Notificaciones";
     static final String PLANTILLA = "src/main/resources/org/luubstar/lsdatabase/Utils/file.lsdata";
     static final String PLANTILLASOURCE = "/org/luubstar/lsdatabase/Utils/file.lsdata";
     private static String databaseURL;
     public static Tabla actual;
+    public static Tabla notificaciones;
     public static DataFile file;
     static File actualFile;
 
@@ -49,6 +51,7 @@ public class Database {
     public static void disconect(){
         actualFile = null;
         actual = null;
+        notificaciones = null;
         databaseURL = null;
     }
 
@@ -57,6 +60,10 @@ public class Database {
             Tabla t = Tabla.createEmpty(tableName);
             t.generateTable(conn);
             actual = t;
+
+            t = Tabla.createEmpty(notificationName);
+            t.generateTable(conn);
+            notificaciones = t;
         }
         catch (Exception e){logger.error("Error en la inicialización", e);}
     }
