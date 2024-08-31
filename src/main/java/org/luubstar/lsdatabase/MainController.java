@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -211,12 +208,29 @@ public class MainController implements Initializable {
         notificationBox.setPadding(new Insets(10));
         notificationMenu.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1;");
 
-        MenuItem notificationContainer = new MenuItem(null, notificationBox);
+        ScrollPane scrollPane = new ScrollPane(notificationBox);
+        scrollPane.setPrefSize(250, 200);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 1;");
+
+        MenuItem notificationContainer = new MenuItem(null, scrollPane);
         notificationContainer.getStyleClass().add("notification");
         notificationMenu.getItems().add(notificationContainer);
 
         notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
         notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));
+        notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));notificaciones.add(new Notification("Hola", "Caracola", Date.valueOf(LocalDate.now())));
+
         notificaciones.add(new Notification("Hola", "CaracolaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", Date.valueOf(LocalDate.now())));
 
         Stage primaryStage = App.st;
