@@ -39,12 +39,14 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1020.0" minHeight="600.0" minWidth="1000.0" prefHeight="632.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.luubstar.lsdatabase.MainController">
    <left>
@@ -52,6 +54,31 @@
          <children>
             <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="165.0" minHeight="565.0" minWidth="165.0" prefHeight="565.0" prefWidth="165.0">
                <children>
+                  <HBox prefHeight="57.0" prefWidth="44.0">
+                     <children>
+                        <StackPane prefHeight="79.0" prefWidth="79.0">
+                           <children>
+                              <Button fx:id="button_notificacion" mnemonicParsing="false" prefHeight="34.0" prefWidth="32.0" style="-fx-background-color: null;" textFill="TRANSPARENT">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@bell.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Circle fx:id="bell_circle" fill="#ff1f1f" radius="7.0" stroke="BLACK" strokeType="INSIDE">
+                                 <StackPane.margin>
+                                    <Insets bottom="13.0" left="13.0" />
+                                 </StackPane.margin>
+                              </Circle>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="5.0" />
+                     </VBox.margin>
+                  </HBox>
                   <Button fx:id="button_Inicio" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" text="Inicio">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
@@ -157,39 +184,46 @@
       </HBox>
    </center>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Archivo">
-            <items>
-                  <MenuItem mnemonicParsing="false" onAction="#newfile" text="Nuevo">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator>
-                  </MenuItem>
-              <MenuItem mnemonicParsing="false" onAction="#open" text="Abrir">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#save" text="Guardar">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-                     </accelerator></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Guardar como">
-                     <accelerator>
-                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
-                     </accelerator></MenuItem>
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Pestañas">
-               <items>
-                  <MenuItem fx:id="pInicio" mnemonicParsing="false" text="Inicio" />
-                  <MenuItem fx:id="pBuscar" mnemonicParsing="false" text="Buscar" />
-                  <MenuItem fx:id="pAdd" mnemonicParsing="false" text="Añadir" />
-                  <MenuItem fx:id="pFacturar" mnemonicParsing="false" text="Facturar" />
-                  <MenuItem fx:id="pRecordatorios" mnemonicParsing="false" text="Recordatorios" />
-               </items>
-            </Menu>
-        </menus>
-      </MenuBar>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar HBox.hgrow="ALWAYS">
+              <menus>
+                <Menu mnemonicParsing="false" text="Archivo">
+                  <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newfile" text="Nuevo">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                    <MenuItem mnemonicParsing="false" onAction="#open" text="Abrir">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#save" text="Guardar">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#saveAs" text="Guardar como">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Pestañas">
+                     <items>
+                        <MenuItem fx:id="pInicio" mnemonicParsing="false" text="Inicio" />
+                        <MenuItem fx:id="pBuscar" mnemonicParsing="false" text="Buscar" />
+                        <MenuItem fx:id="pAdd" mnemonicParsing="false" text="Añadir" />
+                        <MenuItem fx:id="pFacturar" mnemonicParsing="false" text="Facturar" />
+                        <MenuItem fx:id="pRecordatorios" mnemonicParsing="false" text="Recordatorios" />
+                     </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </HBox>
    </top>
 </BorderPane>

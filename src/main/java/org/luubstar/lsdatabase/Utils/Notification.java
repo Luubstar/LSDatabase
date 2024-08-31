@@ -28,6 +28,7 @@ public class Notification{
 
     public void SendNotification(){
         try{
+            ChangePanel.getNavigator().addNotificacion(this);
             String os = System.getProperty("os.name");
             if (os.contains("Linux") || os.contains("Mac")){
               DateFormat dateFormat = new SimpleDateFormat("HH:mm M/dd/yyyy");
@@ -77,4 +78,16 @@ public class Notification{
     return "script_" + System.currentTimeMillis();
 }
 
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
 }

@@ -19,7 +19,7 @@ import java.util.Objects;
 public class App extends Application {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final String CACHEFILE = "last.txt";
-    static Stage st;
+    public static Stage st;
     static String[] appargs;
 
     @Override
@@ -27,6 +27,7 @@ public class App extends Application {
         try {
             logger.info("");
             logger.info("INICIANDO APLICACIÓN\n");
+            st = stage;
             preloads();
 
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
@@ -40,7 +41,6 @@ public class App extends Application {
             stage.setScene(scene);
             stage.setOnCloseRequest(this::handleWindowClose);
             stage.show();
-            st = stage;
         }
         catch (Exception e){logger.error("Se ha detectado un error en el inicio ", e);}
     }

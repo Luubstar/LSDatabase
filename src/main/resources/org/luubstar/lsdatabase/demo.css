@@ -42,3 +42,9 @@
     -fx-padding: 70px;
     -fx-alignment: center;
 }
+
+.notification {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+}
