@@ -279,11 +279,13 @@ public class MainController implements Initializable {
     public void addNotificacion(Notification n){
         List<String> v = n.getVals();
         Database.add(Database.notificaciones, v);
+        Database.unsaved = true;
         readNotificacion();
     }
 
     public void deleteNotification(Notification n){
         Database.delete(Database.notificaciones, n.getID());
+        Database.unsaved = true;
         readNotificacion();
     }
 
