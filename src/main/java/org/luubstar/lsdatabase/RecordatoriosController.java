@@ -52,6 +52,7 @@ public class RecordatoriosController implements SidePanel {
     private void render(Form f){
         pane.getChildren().clear();
         FormRenderer renderer = new FormRenderer(f);
+        renderer.getChildren().getFirst().getStyleClass().add("formpanel");
         pane.getChildren().add(renderer);
     }
 

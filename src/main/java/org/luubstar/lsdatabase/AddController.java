@@ -17,12 +17,15 @@ import org.luubstar.lsdatabase.Utils.Dropzone;
 import org.luubstar.lsdatabase.Utils.Database.Tabla;
 import org.luubstar.lsdatabase.Utils.Panel;
 import org.luubstar.lsdatabase.Utils.Popup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class AddController implements SidePanel {
+    private static final Logger log = LoggerFactory.getLogger(AddController.class);
     @FXML
     VBox pane;
     @FXML
@@ -58,6 +61,7 @@ public class AddController implements SidePanel {
         f.getFields().getFirst().required(true);
 
         renderer = new FormRenderer(f);
+        renderer.getChildren().getFirst().getStyleClass().add("formpanel");
 
         pane.getChildren().setAll(renderer);
 
@@ -83,6 +87,7 @@ public class AddController implements SidePanel {
     public void clear(){
         lista = formByTable(Database.actual);
         renderer = new FormRenderer(Form.of(Group.of(lista.toArray(new Element[0]))).title(Database.actual.nombre()));
+        renderer.getChildren().getFirst().getStyleClass().add("formpanel");
         pane.getChildren().setAll(renderer);
     }
 

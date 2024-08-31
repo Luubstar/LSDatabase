@@ -38,7 +38,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
@@ -47,44 +46,23 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1020.0" minHeight="600.0" minWidth="1000.0" prefHeight="632.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.luubstar.lsdatabase.MainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1020.0" minHeight="600.0" minWidth="1000.0" prefHeight="632.0" prefWidth="1020.0" styleClass="background" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.luubstar.lsdatabase.MainController">
    <left>
-      <HBox prefHeight="600.0" prefWidth="171.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="600.0" prefWidth="171.0" styleClass="sidepanel" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="165.0" minHeight="565.0" minWidth="165.0" prefHeight="565.0" prefWidth="165.0">
                <children>
-                  <HBox prefHeight="57.0" prefWidth="44.0">
-                     <children>
-                        <StackPane prefHeight="79.0" prefWidth="79.0">
-                           <children>
-                              <Button fx:id="button_notificacion" mnemonicParsing="false" prefHeight="34.0" prefWidth="32.0" style="-fx-background-color: null;" textFill="TRANSPARENT">
-                                 <graphic>
-                                    <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@bell.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
-                              <Circle fx:id="bell_circle" fill="#ff1f1f" radius="7.0" stroke="BLACK" strokeType="INSIDE">
-                                 <StackPane.margin>
-                                    <Insets bottom="13.0" left="13.0" />
-                                 </StackPane.margin>
-                              </Circle>
-                           </children>
-                        </StackPane>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="5.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <Button fx:id="button_Inicio" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" text="Inicio">
+                  <Button fx:id="button_Inicio" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" styleClass="navigatorButton" text="  Inicio">
                      <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="32.0" fitWidth="226.0" pickOnBounds="true" preserveRatio="true">
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
+                           <image>
+                              <Image url="@house.png" />
+                           </image>
                         </ImageView>
                      </graphic>
                      <VBox.margin>
@@ -96,10 +74,16 @@
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <font>
+                        <Font name="Cambria" size="16.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="button_Buscar" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" text="Buscar">
+                  <Button fx:id="button_Buscar" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" styleClass="navigatorButton" text="  Buscar">
                      <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@search.png" />
+                           </image></ImageView>
                      </graphic>
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -110,10 +94,16 @@
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <font>
+                        <Font name="Cambria" size="16.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="button_Anadir" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" text="Añadir">
+                  <Button fx:id="button_Anadir" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" styleClass="navigatorButton" text="   Añadir">
                      <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="32.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@plus.png" />
+                           </image></ImageView>
                      </graphic>
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -124,10 +114,16 @@
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <font>
+                        <Font name="Cambria" size="16.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="button_Facturar" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" text="Facturar">
+                  <Button fx:id="button_Facturar" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" styleClass="navigatorButton" text="  Facturar">
                      <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Data.png" />
+                           </image></ImageView>
                      </graphic>
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -138,8 +134,11 @@
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <font>
+                        <Font name="Cambria" size="16.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="button_Recordatorios" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" text="Recordatorios">
+                  <Button fx:id="button_Recordatorios" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="36.0" prefWidth="154.0" styleClass="navigatorButton" text="  Avisos">
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
@@ -150,19 +149,20 @@
                         <Insets />
                      </opaqueInsets>
                      <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@clock.png" />
+                           </image></ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Cambria" size="16.0" />
+                     </font>
                   </Button>
                </children>
                <HBox.margin>
                   <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
                </HBox.margin>
             </VBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Separator>
          </children>
          <BorderPane.margin>
             <Insets />
@@ -179,14 +179,14 @@
             </VBox>
          </children>
          <BorderPane.margin>
-            <Insets bottom="15.0" right="15.0" top="15.0" />
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </BorderPane.margin>
       </HBox>
    </center>
    <top>
-      <HBox BorderPane.alignment="CENTER">
+      <HBox styleClass="topbar" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar HBox.hgrow="ALWAYS">
+            <MenuBar prefHeight="39.0" prefWidth="975.0" style="-fx-background-color: none;" HBox.hgrow="ALWAYS">
               <menus>
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
@@ -223,6 +223,24 @@
                   </Menu>
               </menus>
             </MenuBar>
+            <StackPane prefHeight="25.0" prefWidth="45.0">
+               <children>
+                  <Button fx:id="button_notificacion" mnemonicParsing="false" prefHeight="23.0" prefWidth="45.0" style="-fx-background-color: null;" textFill="TRANSPARENT">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@bell.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Circle fx:id="bell_circle" fill="#ff1f1f" radius="7.0" stroke="BLACK" strokeType="INSIDE">
+                     <StackPane.margin>
+                        <Insets bottom="13.0" left="13.0" />
+                     </StackPane.margin>
+                  </Circle>
+               </children>
+            </StackPane>
          </children>
       </HBox>
    </top>

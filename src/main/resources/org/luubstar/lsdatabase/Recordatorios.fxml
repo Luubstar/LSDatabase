@@ -27,12 +27,12 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="49.0" prefWidth="807.0" VBox.vgrow="NEVER">
          <children>
-            <Button mnemonicParsing="false" onMouseReleased="#clear" text="Limpiar">
+            <Button mnemonicParsing="false" onMouseReleased="#clear" styleClass="actionbuttons" text="Limpiar">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="button_create" mnemonicParsing="false" onMouseReleased="#create" text="Crear">
+            <Button fx:id="button_create" mnemonicParsing="false" onMouseReleased="#create" styleClass="actionbuttons" text="Crear">
                <HBox.margin>
                   <Insets left="50.0" />
                </HBox.margin>
