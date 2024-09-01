@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.luubstar.lsdatabase.Utils.AnimateButton;
 import org.luubstar.lsdatabase.Utils.ChangePanel;
 import org.luubstar.lsdatabase.Utils.Database.Columna;
 import org.luubstar.lsdatabase.Utils.Database.Database;
@@ -21,6 +22,9 @@ public class SearchController implements SidePanel {
     TableView<ObservableList<String>> tabla;
     @FXML
     ScrollPane scrollpane;
+    @FXML
+    Button button_busqueda;
+
     Tabla original;
     Tabla actual;
     List<String> IDs;
@@ -29,6 +33,8 @@ public class SearchController implements SidePanel {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         original = Database.actual;
         createTableview(original);
+
+        AnimateButton.animateButton(button_busqueda);
     }
 
     @Override
@@ -53,7 +59,6 @@ public class SearchController implements SidePanel {
         datos.addFirst(ID);
         ChangePanel.changeContent(Panel.ANADIR);
         ((AddController) ChangePanel.getController(Panel.ANADIR)).visualizarDatos(actual, datos);
-        search();
     }
 
     public void createColumns(Tabla datos){

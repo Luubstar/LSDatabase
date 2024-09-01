@@ -40,36 +40,43 @@ public class ChangePanel {
 
     public static void changeContent(Panel panel){
         int index = PANEL_NOMBRES.indexOf(panel);
+        if(MainController.index == -1){paneles[index].setVisible(true); MainController.index = index;}
+        if(index == MainController.index){return; }
+
         for (Parent p : paneles){
-            if (MainController.index != -1 && p != paneles[MainController.index]){p.setVisible(false); p.setOpacity(0f);}
+            if (p != paneles[MainController.index]){p.setVisible(false); p.setOpacity(0f);}
         }
 
-        if(MainController.index != index) {
-            if(MainController.index != -1){
-                FadeTransition fadeOut = getFadeTransition(index);
-                fadeOut.play();
-            }
-            else{paneles[index].setVisible(true);}
-            MainController.index = index;
-            try{controllers[index].start();}
-            catch (Exception e){logger.debug("El controlador {} no está asignado",PANEL_NOMBRES.get(index).toString());}
-        }
+        FadeTransition fadeOut = getFadeTransition(index);
+        fadeOut.play();
+
+        navigatorController.readNotificacion();
+
+        try{controllers[index].start();}
+        catch (Exception e){logger.debug("El controlador {} no está asignado",PANEL_NOMBRES.get(index).toString());}
     }
 
     private static FadeTransition getFadeTransition(int index) {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(125), paneles[MainController.index]);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.0);
+        fadeOut.setFromValue(1.0f);
+        fadeOut.setToValue(0.0f);
 
         FadeTransition fadeIn = new FadeTransition(Duration.millis(125), paneles[index]);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
+        fadeIn.setFromValue(0.0f);
+        fadeIn.setToValue(1.0f);
 
         fadeOut.setOnFinished(event -> {
             paneles[MainController.index].setVisible(false);
             paneles[index].setVisible(true);
             fadeIn.play();
         });
+
+        fadeIn.setOnFinished(actionEvent -> {
+            paneles[index].setOpacity(1f);
+            paneles[MainController.index].setOpacity(1f);
+            MainController.index = index;
+        });
+
         return fadeOut;
     }
 

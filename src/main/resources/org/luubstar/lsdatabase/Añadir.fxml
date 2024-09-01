@@ -32,7 +32,7 @@
                   <Insets right="100.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onMouseReleased="#clear" styleClass="actionbuttons" text="Limpiar">
+            <Button fx:id="button_clear" mnemonicParsing="false" onMouseReleased="#clear" styleClass="actionbuttons" text="Limpiar">
                <HBox.margin>
                   <Insets right="50.0" />
                </HBox.margin>

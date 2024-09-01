@@ -10,22 +10,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
-import org.luubstar.lsdatabase.Utils.ChangePanel;
+import org.luubstar.lsdatabase.Utils.*;
 import org.luubstar.lsdatabase.Utils.Database.Columna;
 import org.luubstar.lsdatabase.Utils.Database.Database;
-import org.luubstar.lsdatabase.Utils.Dropzone;
 import org.luubstar.lsdatabase.Utils.Database.Tabla;
-import org.luubstar.lsdatabase.Utils.Panel;
-import org.luubstar.lsdatabase.Utils.Popup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class AddController implements SidePanel {
-    private static final Logger log = LoggerFactory.getLogger(AddController.class);
     @FXML
     VBox pane;
     @FXML
@@ -34,6 +28,9 @@ public class AddController implements SidePanel {
     Button button_delete;
     @FXML
     Button button_save;
+    @FXML
+    Button button_clear;
+
     final BooleanProperty isEditing = new SimpleBooleanProperty(false);
 
     FormRenderer renderer;
@@ -50,6 +47,11 @@ public class AddController implements SidePanel {
 
         button_back.visibleProperty().bind(isEditing);
         button_delete.visibleProperty().bind(isEditing);
+
+        AnimateButton.animateButton(button_back);
+        AnimateButton.animateButton(button_delete);
+        AnimateButton.animateButton(button_save);
+        AnimateButton.animateButton(button_clear);
     }
 
     @Override
@@ -86,7 +88,9 @@ public class AddController implements SidePanel {
     
     public void clear(){
         lista = formByTable(Database.actual);
-        renderer = new FormRenderer(Form.of(Group.of(lista.toArray(new Element[0]))).title(Database.actual.nombre()));
+        f = Form.of(Group.of(lista.toArray(new Element[0]))).title(Database.actual.nombre());
+        f.getFields().getFirst().required(true);
+        renderer = new FormRenderer(f);
         renderer.getChildren().getFirst().getStyleClass().add("formpanel");
         pane.getChildren().setAll(renderer);
     }

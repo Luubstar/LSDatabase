@@ -6,6 +6,7 @@ import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import org.luubstar.lsdatabase.Utils.AnimateButton;
 import org.luubstar.lsdatabase.Utils.Notification;
 import org.luubstar.lsdatabase.Utils.Popup;
 import org.slf4j.Logger;
@@ -22,16 +23,22 @@ public class RecordatoriosController implements SidePanel {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     List<String> horas = Arrays.asList("8:00", "17:00", "21:00");
     List<Integer> horasEntero = Arrays.asList(8, 17, 21);
+    Form form;
+
     @FXML
     VBox pane;
     @FXML
     Button button_create;
-    Form form;
+    @FXML
+    Button button_clear;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         form = createFrom();
         render(form);
+
+        AnimateButton.animateButton(button_create);
+        AnimateButton.animateButton(button_clear);
     }
 
     public void start(){}

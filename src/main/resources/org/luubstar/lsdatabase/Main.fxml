@@ -186,7 +186,7 @@
    <top>
       <HBox styleClass="topbar" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar prefHeight="39.0" prefWidth="975.0" style="-fx-background-color: none;" HBox.hgrow="ALWAYS">
+            <MenuBar prefHeight="25.0" prefWidth="975.0" style="-fx-background-color: none;" HBox.hgrow="ALWAYS">
               <menus>
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
@@ -227,14 +227,14 @@
                <children>
                   <Button fx:id="button_notificacion" mnemonicParsing="false" prefHeight="23.0" prefWidth="45.0" style="-fx-background-color: null;" textFill="TRANSPARENT">
                      <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@bell.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Circle fx:id="bell_circle" fill="#ff1f1f" radius="7.0" stroke="BLACK" strokeType="INSIDE">
+                  <Circle fx:id="bell_circle" fill="#ff1f1f" radius="5.0" stroke="BLACK" strokeType="INSIDE">
                      <StackPane.margin>
                         <Insets bottom="13.0" left="13.0" />
                      </StackPane.margin>
