@@ -1,13 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="97.0" prefWidth="260.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" >
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-
-    <Label fx:id="welcomeText" text="Facturar" />
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="807.0" styleClass="formpanel" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.luubstar.lsdatabase.FacturarController">
+   <children>
+      <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefHeight="575.0" prefWidth="800.0" styleClass="formpanel" HBox.hgrow="ALWAYS">
+               <content>
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="800.0" styleClass="formpanel">
+                     <children>
+                        <VBox fx:id="pane" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="800.0" styleClass="formpanel" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <children>
+                              <GridPane fx:id="grid" alignment="TOP_CENTER" prefHeight="331.0" prefWidth="785.0" vgap="5.0" VBox.vgrow="ALWAYS">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="109.0" />
+                                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="532.0" minWidth="10.0" prefWidth="496.0" />
+                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="397.0" minWidth="10.0" prefWidth="113.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="397.0" minWidth="10.0" prefWidth="37.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Empresa emisora:  " GridPane.halignment="LEFT" />
+                                    <Button mnemonicParsing="false" onMouseReleased="#select" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="2" />
+                                    <Label text="Empresa receptora:" GridPane.rowIndex="1" />
+                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Label text="Cliente:" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onMouseReleased="#deselect" text="X" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" onMouseReleased="#deselect" text="X" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <Button mnemonicParsing="false" onMouseReleased="#deselect" text="X" GridPane.columnIndex="3" />
+                                    <TextField editable="false" prefHeight="25.0" prefWidth="416.0" promptText="..." GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <TextField editable="false" prefHeight="25.0" prefWidth="273.0" promptText="..." GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <opaqueInsets>
+                                          <Insets left="5.0" right="5.0" />
+                                       </opaqueInsets>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <TextField editable="false" prefHeight="25.0" prefWidth="273.0" promptText="..." GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <opaqueInsets>
+                                          <Insets left="5.0" right="5.0" />
+                                       </opaqueInsets>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="40.0" right="40.0" />
+                                 </VBox.margin>
+                              </GridPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="49.0" prefWidth="807.0" VBox.vgrow="NEVER">
+         <children>
+            <Button fx:id="button_clear" mnemonicParsing="false" onMouseReleased="#clear" styleClass="actionbuttons" text="Limpiar">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="button_save" mnemonicParsing="false" onMouseReleased="#add" styleClass="actionbuttons" text="Guardar">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+   </children>
 </VBox>
