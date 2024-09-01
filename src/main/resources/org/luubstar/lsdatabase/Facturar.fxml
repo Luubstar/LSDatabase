@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="807.0" styleClass="formpanel" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.luubstar.lsdatabase.FacturarController">
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="807.0" styleClass="formpanel" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
@@ -39,14 +39,14 @@
                                 </rowConstraints>
                                  <children>
                                     <Label text="Empresa emisora:  " GridPane.halignment="LEFT" />
-                                    <Button mnemonicParsing="false" onMouseReleased="#select" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="2" />
+                                    <Button fx:id="seleccionar" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="2" />
                                     <Label text="Empresa receptora:" GridPane.rowIndex="1" />
                                     <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <Label text="Cliente:" GridPane.rowIndex="2" />
                                     <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onMouseReleased="#deselect" text="X" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" onMouseReleased="#deselect" text="X" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" onMouseReleased="#deselect" text="X" GridPane.columnIndex="3" />
+                                    <Button mnemonicParsing="false" text="X" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" text="X" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <Button fx:id="deseleccionar" mnemonicParsing="false" text="X" GridPane.columnIndex="3" />
                                     <TextField editable="false" prefHeight="25.0" prefWidth="416.0" promptText="..." GridPane.columnIndex="1">
                                        <GridPane.margin>
                                           <Insets left="5.0" right="5.0" />
