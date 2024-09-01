@@ -37,7 +37,7 @@ public class BackupTest {
         if(new File(n).exists()){Assertions.fail("El fichero ya existe " + n);}
         try{
             Backup.createBackupFile(Backup.DIR);
-            File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".db");
+            File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".lsdata");
             if(!f.renameTo(new File(Backup.DIR + "/" + n))){
                 Assertions.fail("Error renombrando fichero");
             }
@@ -72,7 +72,7 @@ public class BackupTest {
         try{Backup.createBackupFile(Backup.DIR);}
         catch (Exception e){Assertions.fail("Error en la creación de un backup ", e);}
 
-        File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".db");
+        File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".lsdata");
         File[] files = new File(Backup.DIR).listFiles();
 
         Assertions.assertNotNull(files, "No se ha creado el fichero");
@@ -134,7 +134,7 @@ public class BackupTest {
         try{Backup.makeBackup();}
         catch (Exception e){Assertions.fail("Error en la función makebackup");}
 
-        File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".db");
+        File f = new File(Backup.DIR + "/backup_" + getDateString(LocalDate.now()) + ".lsdata");
 
         Assertions.assertTrue(f.exists(), "La función makeBackup no crea un backup");
     }

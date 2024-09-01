@@ -1,0 +1,172 @@
+
+.topbar{
+    -fx-background-color: lightgray;
+    -fx-border-color: gray;
+    -fx-border-width: 1px;
+}
+
+.background{
+    -fx-background-color: #fafad4;
+}
+
+.sidepanel{
+    -fx-background-color: #efefbc;
+    -fx-border-width: 0px 1px 0px 0px;
+    -fx-border-color: black;
+}
+
+/* inputs */
+.dropzone{
+    -fx-border-color: gray;
+    -fx-padding: 70px;
+    -fx-alignment: center;
+}
+
+.formpanel{
+    -fx-border-width: 0px;
+    -fx-background-color: transparent;
+}
+
+.input {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.text-field{
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* notifications */
+.notification {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+.notification:hover{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}
+
+/* buttons */
+.navigatorButton{
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: #f9c593;
+    -fx-border-color: #fb7968;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(gaussian, #AFAFAF, 3,0,0,3);
+}
+
+.actionbuttons{
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: green;
+    -fx-border-color: darkgreen;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(gaussian, #AFAFAF, 2,0,0,2);
+}
+
+.searchbutton{
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-background-color: blue;
+    -fx-border-color: darkblue;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(gaussian, #AFAFAF, 2,0,0,2);
+}
+
+/* scroll */
+.scroll-bar .track {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 7.5px;
+    -fx-pref-width: 15px;
+    -fx-min-width: 15px;
+}
+
+.scroll-bar:horizontal .track {
+    -fx-background-color: #e0e0e0;
+    -fx-background-radius: 7.5px;
+    -fx-pref-height: 15px;
+    -fx-min-height: 15px;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #a0a0a0;
+    -fx-background-radius: 7.5px;
+    -fx-pref-width: 15px;
+    -fx-min-width: 15px;
+}
+
+.scroll-bar:horizontal .thumb {
+    -fx-pref-height: 15px;
+    -fx-min-height: 15px;
+    -fx-background-radius: 7.5px;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-radius: 7.5px;
+    -fx-background-color: #e0e0e0;
+}
+
+.scroll-bar{
+    -fx-background-radius: 7.5px;
+}
+.scroll-bar:horizontal{
+    -fx-background-radius: 7.5px;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+    -fx-border-width: 0px;
+}
+
+/* table views */
+/* Estilo general para TableView */
+.table-view {
+    -fx-background-color: #f5f5f5; /* Fondo blanco grisáceo */
+    -fx-border-color: transparent; /* Sin borde alrededor de la tabla */
+}
+
+/* Estilo para los encabezados de columna */
+.table-view .column-header {
+    -fx-background-color: #f5f5f5; /* Mismo color de fondo que el resto de la tabla */
+    -fx-border-color: #d0d0d0; /* Color del borde de los encabezados */
+    -fx-border-width: 0 0 1px 0; /* Borde inferior para separar los encabezados de la tabla */
+    -fx-font-weight: bold; /* Fuente en negrita */
+    -fx-padding: 5px; /* Espaciado interno en los encabezados */
+    -fx-text-fill: #333333; /* Color del texto en los encabezados */
+}
+
+/* Estilo para celdas de la tabla */
+.table-view .table-cell {
+    -fx-border-color: #d0d0d0; /* Color de las líneas divisorias de celdas */
+    -fx-border-width: 0 1px 1px 0; /* Línea divisoria fina entre columnas y filas */
+    -fx-padding: 5px; /* Espaciado interno de las celdas */
+    -fx-background-color: #ffffff; /* Fondo blanco para las celdas */
+    -fx-text-fill: #333333; /* Color del texto en las celdas */
+}
+
+/* Estilo para filas impares */
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f9f9f9; /* Fondo gris muy claro para filas impares */
+}
+
+/* Estilo para filas pares */
+.table-view .table-row-cell:even {
+    -fx-background-color: #ffffff; /* Fondo blanco para filas pares */
+}
+
+/* Estilo para filas seleccionadas */
+.table-view .table-row-cell:selected {
+    -fx-background-color: #cce5ff; /* Fondo azul claro para filas seleccionadas */
+    -fx-text-fill: black; /* Color del texto en las filas seleccionadas para asegurar visibilidad */
+}
+
+/* Estilo para celdas cuando la tabla tiene el foco */
+.table-view .table-cell:focused {
+    -fx-background-color: #e0e0e0; /* Fondo gris claro cuando la celda está enfocada */
+    -fx-text-fill: black; /* Asegura que el texto sea visible cuando la celda está enfocada */
+}

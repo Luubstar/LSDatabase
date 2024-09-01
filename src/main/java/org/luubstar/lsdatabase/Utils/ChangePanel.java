@@ -1,8 +1,10 @@
 package org.luubstar.lsdatabase.Utils;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 import org.luubstar.lsdatabase.App;
 import org.luubstar.lsdatabase.MainController;
 import org.luubstar.lsdatabase.SidePanel;
@@ -38,13 +40,44 @@ public class ChangePanel {
 
     public static void changeContent(Panel panel){
         int index = PANEL_NOMBRES.indexOf(panel);
-        if(MainController.index != index) {
-           for(Parent p : paneles){p.setVisible(false);}
-           paneles[index].setVisible(true);
-           MainController.index = index;
-           try{controllers[index].start();}
-           catch (Exception e){logger.debug("El controlador {} no está asignado",PANEL_NOMBRES.get(index).toString());}
+        if(MainController.index == -1){paneles[index].setVisible(true); MainController.index = index;}
+        if(index == MainController.index){return; }
+
+        for (Parent p : paneles){
+            if (p != paneles[MainController.index]){p.setVisible(false); p.setOpacity(0f);}
         }
+
+        FadeTransition fadeOut = getFadeTransition(index);
+        fadeOut.play();
+
+        navigatorController.readNotificacion();
+
+        try{controllers[index].start();}
+        catch (Exception e){logger.debug("El controlador {} no está asignado",PANEL_NOMBRES.get(index).toString());}
+    }
+
+    private static FadeTransition getFadeTransition(int index) {
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(125), paneles[MainController.index]);
+        fadeOut.setFromValue(1.0f);
+        fadeOut.setToValue(0.0f);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(125), paneles[index]);
+        fadeIn.setFromValue(0.0f);
+        fadeIn.setToValue(1.0f);
+
+        fadeOut.setOnFinished(event -> {
+            paneles[MainController.index].setVisible(false);
+            paneles[index].setVisible(true);
+            fadeIn.play();
+        });
+
+        fadeIn.setOnFinished(actionEvent -> {
+            paneles[index].setOpacity(1f);
+            paneles[MainController.index].setOpacity(1f);
+            MainController.index = index;
+        });
+
+        return fadeOut;
     }
 
     public static SidePanel getController(Panel panel){

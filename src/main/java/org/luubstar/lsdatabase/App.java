@@ -34,7 +34,7 @@ public class App extends Application {
 
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("demo.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("light.css")).toExternalForm());
             stage.setTitle("Database");
 
             stage.setMinWidth(1050);

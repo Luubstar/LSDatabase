@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -12,7 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import org.luubstar.lsdatabase.Utils.AnimateButton;
 import org.luubstar.lsdatabase.Utils.ChangePanel;
 import org.luubstar.lsdatabase.Utils.Database.Database;
 import org.luubstar.lsdatabase.Utils.Notification;
@@ -96,23 +97,22 @@ public class MainController implements Initializable {
 
         setNotificationButton();
         bell_circle.setVisible(false);
-
-        new Thread(() -> {
-            try {
-                readNotificacion();
-                logger.info("Se están actualizando las notificaciones");
-                Thread.sleep(3600000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-
+        readNotificacion();
 
         pInicio.disableProperty().bind(canMove);
         pBuscar.disableProperty().bind(canMove);
         pAdd.disableProperty().bind(canMove);
         pFacturar.disableProperty().bind(canMove);
         pRecordatorios.disableProperty().bind(canMove);
+
+        AnimateButton.animateButton(button_Inicio);
+        AnimateButton.animateButton(button_Buscar);
+        AnimateButton.animateButton(button_Anadir);
+        AnimateButton.animateButton(button_Facturar);
+        AnimateButton.animateButton(button_Recordatorios);
+        AnimateButton.animateButton(button_notificacion);
+
+
         ChangePanel.changeContent(Panel.DASHBOARD);
     }
 
@@ -229,7 +229,6 @@ public class MainController implements Initializable {
         notificationContainer.getStyleClass().add("notification");
         notificationMenu.getItems().add(notificationContainer);
 
-        Stage primaryStage = App.st;
         button_notificacion.setOnAction(e -> {
             notificationBox.getChildren().clear();
 
@@ -241,9 +240,10 @@ public class MainController implements Initializable {
                     notificationBox.getChildren().add(notificationButton);
                 }
 
+                Bounds buttonBounds = button_notificacion.localToScreen(button_notificacion.getBoundsInLocal());
                 notificationMenu.show(button_notificacion,
-                        primaryStage.getX() + button_notificacion.getLayoutX(),
-                        primaryStage.getY() + button_notificacion.getLayoutY() + button_notificacion.getHeight() + 30);
+                        buttonBounds.getMinX() - 50,
+                        buttonBounds.getMinY() + 30);
                 st.requestFocus();
             } else {notificationMenu.hide();}
         });
@@ -279,11 +279,13 @@ public class MainController implements Initializable {
     public void addNotificacion(Notification n){
         List<String> v = n.getVals();
         Database.add(Database.notificaciones, v);
+        Database.unsaved = true;
         readNotificacion();
     }
 
     public void deleteNotification(Notification n){
         Database.delete(Database.notificaciones, n.getID());
+        Database.unsaved = true;
         readNotificacion();
     }
 
