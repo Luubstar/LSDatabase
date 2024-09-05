@@ -6,18 +6,17 @@ import com.dlsc.formsfx.model.structure.Group;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.luubstar.lsdatabase.Utils.AnimateButton;
+import org.luubstar.lsdatabase.Utils.GridUtils;
 import org.luubstar.lsdatabase.Utils.Panel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +35,8 @@ public class FacturarController implements SidePanel {
     Button button_clear;
     @FXML
     GridPane grid;
+    @FXML
+    HBox controles;
 
     Form f;
 
@@ -72,7 +73,7 @@ public class FacturarController implements SidePanel {
         FormRenderer renderer = new FormRenderer(f);
         renderer.getChildren().getFirst().getStyleClass().add("formpanel");
         pane.getChildren().remove(grid);
-        pane.getChildren().addAll(renderer, grid);
+        pane.getChildren().addAll(renderer, controles, grid);
     }
 
     public void select(int p){
@@ -80,33 +81,46 @@ public class FacturarController implements SidePanel {
         if(selected == null){return;}
         addListAtIndex(p, selected);
 
-        Node v = getNodeByRowColumnIndex(p, 1);
+        log.debug(String.valueOf(p));
+
+        Node v = GridUtils.getNodeByRowColumnIndex(grid, p, 1);
+
+        log.debug(String.valueOf(v != null));
+        log.debug(Arrays.toString(selected.toArray()));
         if(v != null){
             ((TextField) v).setText(selected.get(1) + " " + selected.get(2) + " " + selected.get(3));
         }
-
-        if(grid.getRowCount() -1 == p){
-            addNewRow(++p);
-            reconfigureGrid();
-        }
-
-        log.info(Arrays.toString(clientes.toArray()));
     }
 
     public void deselect(int p){
         addListAtIndex(p, null);
-        Node v = getNodeByRowColumnIndex(p, 1);
+        Node v = GridUtils.getNodeByRowColumnIndex(grid, p, 1);
+        Node v2 = GridUtils.getNodeByRowColumnIndex(grid, p, 2);
 
-        if(p > 2){deleteRow(p);}
-
-        if(v != null){
+        if(v != null && v2 != null){
+            ((TextField) v).setText("");
+            ((TextField) v2).setText("");
+        }
+        if(v != null && p <= 2){
             ((TextField) v).setText("");
         }
     }
 
+    public void addClient(){
+        GridUtils.addNewRow(grid, selectionID);
+        reconfigureGrid();
+    }
+
+    public void removeClient(){
+        if(selectionID >= 2) {
+            GridUtils.deleteRow(grid, --selectionID);
+            reconfigureGrid();
+        }
+    }
+
     private void reconfigureGrid(){
-        selectionID = 0;
-        removeID = 0;
+        selectionID = 1;
+        removeID = 1;
 
         List<Node> sortedNodes = grid.getChildren().stream()
                 .sorted(Comparator.comparingInt((Node n) -> GridPane.getRowIndex(n) == null ? 0 : GridPane.getRowIndex(n))
@@ -128,58 +142,6 @@ public class FacturarController implements SidePanel {
         });
     }
 
-    public Node getNodeByRowColumnIndex(final int row, final int column) {
-        for (Node node : grid.getChildren()) {
-            Integer nodeRow = GridPane.getRowIndex(node);
-            Integer nodeColumn = GridPane.getColumnIndex(node);
-
-            if (nodeRow == null) {
-                nodeRow = 0;
-            }
-            if (nodeColumn == null) {
-                nodeColumn = 0;
-            }
-
-            if (nodeRow == row && nodeColumn == column) {
-                return node;
-            }
-        }
-        return null;
-    }
-
-    void deleteRow(int rowIndex) {
-        Iterator<Node> iterator = grid.getChildren().iterator();
-        while (iterator.hasNext()) {
-            Node node = iterator.next();
-            Integer row = GridPane.getRowIndex(node);
-            if (row != null && row == rowIndex) {
-                iterator.remove();
-            }
-        }
-
-        for (Node node : grid.getChildren()) {
-            Integer row = GridPane.getRowIndex(node);
-            if (row != null && row > rowIndex) {
-                GridPane.setRowIndex(node, row - 1);
-            }
-        }
-    }
-
-    public void addNewRow( int rowIndex) {
-        TextField tf = new TextField();
-        tf.setEditable(false);
-        tf.setPromptText("...");
-
-        Button b = new Button("Seleccionar");
-        b.setPrefSize(107, 25);
-
-        grid.add(new Label("Cliente:"), 0, rowIndex);
-        grid.add(tf, 1, rowIndex);
-        grid.add(b, 2, rowIndex);
-        grid.add(new Button("X"), 3, rowIndex);
-
-        GridPane.setMargin(tf, new Insets(5, 5, 0, 0));
-    }
 
     void addListAtIndex(int index, List<String> list) {
         while (clientes.size() <= index) {
@@ -191,6 +153,8 @@ public class FacturarController implements SidePanel {
     public void clear(){f.reset();}
 
     public void add(){}
+
+
 
     public List<String> openWindow(Panel panel, Object controller){
         try {
