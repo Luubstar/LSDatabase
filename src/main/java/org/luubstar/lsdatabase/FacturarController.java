@@ -1,9 +1,12 @@
 package org.luubstar.lsdatabase;
 
-import com.dlsc.formsfx.model.structure.Field;
-import com.dlsc.formsfx.model.structure.Form;
-import com.dlsc.formsfx.model.structure.Group;
+import com.dlsc.formsfx.model.structure.*;
+import com.dlsc.formsfx.model.util.BindingMode;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,15 +15,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.luubstar.lsdatabase.Utils.AnimateButton;
-import org.luubstar.lsdatabase.Utils.GridUtils;
-import org.luubstar.lsdatabase.Utils.Panel;
+import org.luubstar.lsdatabase.Utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
@@ -43,6 +47,12 @@ public class FacturarController implements SidePanel {
     int selectionID = 0;
     int removeID = 0;
 
+    StringProperty Nombre = new SimpleStringProperty("");
+    StringProperty Fecha = new SimpleStringProperty("");
+
+    IntegerProperty IVA = new SimpleIntegerProperty(21);
+    IntegerProperty IRPF = new SimpleIntegerProperty(-15);
+
     List<List<String>> clientes = new ArrayList<>();
 
     @Override
@@ -60,12 +70,12 @@ public class FacturarController implements SidePanel {
     private Form createFrom(){
         return Form.of(
                 Group.of(
-                        Field.ofStringType("").label("Nombre:").placeholder("Nombre"),
-                        Field.ofStringType("").label("Fecha límite:").placeholder(LocalDate.now().toString()),
-                        Field.ofIntegerType(21).label("% IVA:").placeholder("21"),
-                        Field.ofIntegerType(-15).label("% IRPF:").placeholder("-15")
+                        Field.ofStringType(Nombre).label("Nombre:").placeholder("Nombre"),
+                        Field.ofStringType(Fecha).label("Fecha límite:").placeholder(LocalDate.now().toString()),
+                        Field.ofIntegerType(IVA).label("% IVA:").placeholder("21"),
+                        Field.ofIntegerType(IRPF).label("% IRPF:").placeholder("-15")
                 )
-        ).title("Factura");
+        ).title("Factura").binding(BindingMode.CONTINUOUS);
     }
 
     private void render(Form f){
@@ -79,21 +89,16 @@ public class FacturarController implements SidePanel {
     public void select(int p){
         List<String> selected = openWindow(Panel.BUSQUEDA, new ClientSelectorController());
         if(selected == null){return;}
-        addListAtIndex(p, selected);
-
-        log.debug(String.valueOf(p));
-
+        addListAtIndex(p-1, selected);
         Node v = GridUtils.getNodeByRowColumnIndex(grid, p, 1);
 
-        log.debug(String.valueOf(v != null));
-        log.debug(Arrays.toString(selected.toArray()));
         if(v != null){
             ((TextField) v).setText(selected.get(1) + " " + selected.get(2) + " " + selected.get(3));
         }
     }
 
     public void deselect(int p){
-        addListAtIndex(p, null);
+        addListAtIndex(p-1, null);
         Node v = GridUtils.getNodeByRowColumnIndex(grid, p, 1);
         Node v2 = GridUtils.getNodeByRowColumnIndex(grid, p, 2);
 
@@ -116,6 +121,30 @@ public class FacturarController implements SidePanel {
             GridUtils.deleteRow(grid, --selectionID);
             reconfigureGrid();
         }
+    }
+
+    public void clear(){f.reset();}
+
+    public void add() throws URISyntaxException {
+        GridUtils.reconfigureGrid(grid, clientes);
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar archivo");
+        fileChooser.setInitialDirectory(new File(new File(MainController.class.getProtectionDomain().getCodeSource().getLocation()
+                .toURI()).getPath()));
+
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Archivos de excel", "*.xlsx")
+        );
+
+        File selectedFile = fileChooser.showSaveDialog(button_save.getScene().getWindow());
+
+        if (selectedFile != null) {
+            if(ExportExcel.exportExcel(Nombre.getValue(), Fecha.getValue(), String.valueOf(IVA.getValue()), String.valueOf(IRPF.getValue()), clientes, selectedFile)){
+                Popup.notify("Fichero creado correctamente");
+            }
+        }
+
     }
 
     private void reconfigureGrid(){
@@ -142,19 +171,12 @@ public class FacturarController implements SidePanel {
         });
     }
 
-
     void addListAtIndex(int index, List<String> list) {
         while (clientes.size() <= index) {
             clientes.add(null);
         }
         clientes.set(index, list);
     }
-
-    public void clear(){f.reset();}
-
-    public void add(){}
-
-
 
     public List<String> openWindow(Panel panel, Object controller){
         try {
@@ -179,5 +201,6 @@ public class FacturarController implements SidePanel {
             return null;
         }
     }
+
 
 }
