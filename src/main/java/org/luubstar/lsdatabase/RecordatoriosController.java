@@ -63,7 +63,7 @@ public class RecordatoriosController implements SidePanel {
         pane.getChildren().add(renderer);
     }
 
-    public void clear(){render(createFrom());}
+    public void clear(){form.reset();}
 
     public void create(){
         String titulo = ((StringField) form.getFields().get(0)).getValue();

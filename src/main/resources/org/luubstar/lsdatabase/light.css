@@ -124,49 +124,34 @@
 }
 
 /* table views */
-/* Estilo general para TableView */
 .table-view {
-    -fx-background-color: #f5f5f5; /* Fondo blanco grisáceo */
-    -fx-border-color: transparent; /* Sin borde alrededor de la tabla */
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: transparent;
+    -fx-selection-bar: red;
+    -fx-selection-bar-non-focused: salmon;
 }
 
-/* Estilo para los encabezados de columna */
 .table-view .column-header {
-    -fx-background-color: #f5f5f5; /* Mismo color de fondo que el resto de la tabla */
-    -fx-border-color: #d0d0d0; /* Color del borde de los encabezados */
-    -fx-border-width: 0 0 1px 0; /* Borde inferior para separar los encabezados de la tabla */
-    -fx-font-weight: bold; /* Fuente en negrita */
-    -fx-padding: 5px; /* Espaciado interno en los encabezados */
-    -fx-text-fill: #333333; /* Color del texto en los encabezados */
+    -fx-background-color: #f5f5f5;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 0 0 1px 0;
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+    -fx-text-fill: #333333;
 }
 
-/* Estilo para celdas de la tabla */
 .table-view .table-cell {
-    -fx-border-color: #d0d0d0; /* Color de las líneas divisorias de celdas */
-    -fx-border-width: 0 1px 1px 0; /* Línea divisoria fina entre columnas y filas */
-    -fx-padding: 5px; /* Espaciado interno de las celdas */
-    -fx-background-color: #ffffff; /* Fondo blanco para las celdas */
-    -fx-text-fill: #333333; /* Color del texto en las celdas */
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 0 1px 1px 0;
+    -fx-padding: 5px;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
 }
 
-/* Estilo para filas impares */
 .table-view .table-row-cell:odd {
-    -fx-background-color: #f9f9f9; /* Fondo gris muy claro para filas impares */
+    -fx-background-color: #f9f9f9;
 }
 
-/* Estilo para filas pares */
 .table-view .table-row-cell:even {
-    -fx-background-color: #ffffff; /* Fondo blanco para filas pares */
-}
-
-/* Estilo para filas seleccionadas */
-.table-view .table-row-cell:selected {
-    -fx-background-color: #cce5ff; /* Fondo azul claro para filas seleccionadas */
-    -fx-text-fill: black; /* Color del texto en las filas seleccionadas para asegurar visibilidad */
-}
-
-/* Estilo para celdas cuando la tabla tiene el foco */
-.table-view .table-cell:focused {
-    -fx-background-color: #e0e0e0; /* Fondo gris claro cuando la celda está enfocada */
-    -fx-text-fill: black; /* Asegura que el texto sea visible cuando la celda está enfocada */
+    -fx-background-color: #ffffff;
 }

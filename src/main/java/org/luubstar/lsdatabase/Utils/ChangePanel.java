@@ -31,8 +31,9 @@ public class ChangePanel {
         controllers = new SidePanel[PANEL_NOMBRES.size()];
         for(int i = 0; i < PANEL_NOMBRES.size(); i++){
             FXMLLoader loader = new FXMLLoader(App.class.getResource(PANEL_NOMBRES.get(i).ruta + ".fxml"));
+            loader.setController(PANEL_NOMBRES.get(i).controller);
             paneles[i] = loader.load();
-            controllers[i] = loader.getController();
+            controllers[i] = PANEL_NOMBRES.get(i).controller;
             mainPane.getChildren().add(paneles[i]);
             paneles[i].setVisible(false);
         }

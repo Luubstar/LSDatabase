@@ -1,11 +1,17 @@
 package org.luubstar.lsdatabase.Utils;
 
-public enum Panel {
-    DASHBOARD("Dashboard"), BUSQUEDA("Busqueda"), ANADIR("Añadir"),
-    FACTURAR("Facturar"), RECORDATORIOS("Recordatorios");
+import org.luubstar.lsdatabase.*;
 
-    final String ruta;
-    Panel(String r){
+public enum Panel {
+    DASHBOARD("Dashboard", new DashboardController()), BUSQUEDA("Busqueda", new SearchController()),
+    ANADIR("Añadir", new AddController()), FACTURAR("Facturar", new FacturarController()),
+    RECORDATORIOS("Recordatorios", new RecordatoriosController());
+
+    public final String ruta;
+    public final SidePanel controller;
+
+    Panel(String r, SidePanel c){
         this.ruta = r;
+        this.controller = c;
     }
 }

@@ -87,12 +87,7 @@ public class AddController implements SidePanel {
     }
     
     public void clear(){
-        lista = formByTable(Database.actual);
-        f = Form.of(Group.of(lista.toArray(new Element[0]))).title(Database.actual.nombre());
-        f.getFields().getFirst().required(true);
-        renderer = new FormRenderer(f);
-        renderer.getChildren().getFirst().getStyleClass().add("formpanel");
-        pane.getChildren().setAll(renderer);
+        f.reset();
     }
 
     public void add(){
