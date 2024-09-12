@@ -45,7 +45,6 @@ public class DashboardController implements SidePanel {
     public void start() {
         try{
             //TODO: mejorar rendimiento
-            Database.start();
             clientsInDB.set(Database.entries(Database.actual));
         }
         catch (Exception e){logger.error("Error recargando tamaño", e);}

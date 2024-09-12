@@ -117,8 +117,11 @@ public class FacturarController implements SidePanel {
     }
 
     public void removeClient(){
-        if(selectionID >= 2) {
-            GridUtils.deleteRow(grid, --selectionID);
+        log.debug(String.valueOf(selectionID));
+        if(selectionID > 3) {
+            GridUtils.deleteRow(grid, selectionID-1);
+            selectionID--;
+            log.debug(String.valueOf(selectionID));
             reconfigureGrid();
         }
     }
