@@ -5,17 +5,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import org.luubstar.lsdatabase.Utils.AnimateButton;
 import org.luubstar.lsdatabase.Utils.ChangePanel;
 import org.luubstar.lsdatabase.Utils.Database.Columna;
 import org.luubstar.lsdatabase.Utils.Database.Database;
 import org.luubstar.lsdatabase.Utils.Database.Tabla;
 import org.luubstar.lsdatabase.Utils.Panel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.*;
 
 public class SearchController implements SidePanel {
+    private static final Logger log = LoggerFactory.getLogger(SearchController.class);
     @FXML
     TextField input_busqueda;
     @FXML
@@ -33,6 +37,17 @@ public class SearchController implements SidePanel {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         original = Database.actual;
         createTableview(original);
+
+        tabla.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                TablePosition selectedCell = tabla.getSelectionModel().getSelectedCells().get(0);
+                int rowIndex = selectedCell.getRow();
+                ObservableList<String> rowData = tabla.getItems().get(rowIndex);
+
+                visualizarCliente(rowData, IDs.get(rowIndex));
+            }
+        });
+
 
         AnimateButton.animateButton(button_busqueda);
     }
@@ -98,13 +113,16 @@ public class SearchController implements SidePanel {
     public void setRowFactory(){
         tabla.setRowFactory( tv -> {
             TableRow<ObservableList<String>> row = new TableRow<>();
+
             row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (!row.isEmpty()) ) {
+                if ((event.getClickCount() == 2) && (!row.isEmpty()) ) {
                     ObservableList<String> rowData = row.getItem();
                     visualizarCliente(rowData, IDs.get(row.getIndex()));
                 }
+                event.consume();
             });
             return row ;
         });
+
     }
 }

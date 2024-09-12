@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="807.0" styleClass="formpanel" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="807.0" styleClass="formpanel" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
@@ -29,7 +29,7 @@
                            <children>
                               <HBox fx:id="controles" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="805.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onMouseReleased="#addClient" prefHeight="30.0" prefWidth="30.0" text="+">
+                                    <Button mnemonicParsing="false" onMouseReleased="#addClient" prefHeight="30.0" prefWidth="30.0" styleClass="actionbuttons" text="+">
                                        <HBox.margin>
                                           <Insets left="100.0" right="50.0" />
                                        </HBox.margin>
@@ -37,7 +37,7 @@
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button mnemonicParsing="false" onMouseReleased="#removeClient" prefHeight="30.0" prefWidth="30.0" text="-">
+                                    <Button mnemonicParsing="false" onMouseReleased="#removeClient" prefHeight="30.0" prefWidth="30.0" styleClass="actionbuttons" text="-">
                                        <HBox.margin>
                                           <Insets left="50.0" right="100.0" />
                                        </HBox.margin>
@@ -70,11 +70,11 @@
                                 </rowConstraints>
                                  <children>
                                     <Label text="Empresa emisora:  " GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-                                    <Button fx:id="seleccionar" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                    <Button fx:id="seleccionar" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" styleClass="actionbuttons" text="Seleccionar" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                     <Label text="Empresa receptora:" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Seleccionar" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                    <Button mnemonicParsing="false" text="X" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                    <Button fx:id="deseleccionar" mnemonicParsing="false" text="X" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" styleClass="actionbuttons" text="Seleccionar" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <Button mnemonicParsing="false" styleClass="actionbuttons" text="X" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                    <Button fx:id="deseleccionar" mnemonicParsing="false" styleClass="actionbuttons" text="X" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                                     <TextField editable="false" prefHeight="25.0" prefWidth="416.0" promptText="..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
                                        <GridPane.margin>
                                           <Insets left="5.0" right="5.0" />

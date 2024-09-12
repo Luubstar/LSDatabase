@@ -6,20 +6,21 @@
 }
 
 .background{
-    -fx-background-color: #fafad4;
+    -fx-background-color: #95C2B6;
 }
 
 .sidepanel{
-    -fx-background-color: #efefbc;
+    -fx-background-color: #7DA99E;
     -fx-border-width: 0px 1px 0px 0px;
-    -fx-border-color: black;
+    -fx-border-color: #659085;
 }
 
 /* inputs */
 .dropzone{
-    -fx-border-color: gray;
+    -fx-border-color: darkgray;
     -fx-padding: 70px;
     -fx-alignment: center;
+    -fx-background-color: gray
 }
 
 .formpanel{
@@ -27,16 +28,15 @@
     -fx-background-color: transparent;
 }
 
-.input {
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-}
-
 .text-field{
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
+    -fx-background-color: #ADDACF;
+    -fx-prompt-text-fill: darkgray;
+
+    -fx-border-width: 2px;
+    -fx-border-color: #7DA99E;
+    -fx-effect: dropshadow(gaussian, #1f2d2a, 3,0,0,3);
 }
 
 /* notifications */
@@ -54,53 +54,45 @@
 .navigatorButton{
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    -fx-background-color: #f9c593;
-    -fx-border-color: #fb7968;
+    -fx-background-color: #659085;
+    -fx-border-color: #54786f;
     -fx-border-width: 1.5px;
-    -fx-effect: dropshadow(gaussian, #AFAFAF, 3,0,0,3);
+    -fx-effect: dropshadow(gaussian, #1f2d2a, 3,0,0,3);
 }
 
 .actionbuttons{
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-    -fx-background-color: green;
-    -fx-border-color: darkgreen;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-background-color: #7DA99E;
+    -fx-border-color: #659085;
     -fx-border-width: 1.5px;
-    -fx-effect: dropshadow(gaussian, #AFAFAF, 2,0,0,2);
-}
-
-.searchbutton{
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-    -fx-background-color: blue;
-    -fx-border-color: darkblue;
-    -fx-border-width: 1.5px;
-    -fx-effect: dropshadow(gaussian, #AFAFAF, 2,0,0,2);
+    -fx-effect: dropshadow(gaussian, #1f2d2a, 3,0,0,3);
 }
 
 /* scroll */
 .scroll-bar .track {
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: #addacf;
     -fx-background-radius: 7.5px;
     -fx-pref-width: 15px;
     -fx-min-width: 15px;
 }
 
 .scroll-bar:horizontal .track {
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: #addacf;
     -fx-background-radius: 7.5px;
     -fx-pref-height: 15px;
     -fx-min-height: 15px;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #a0a0a0;
+    -fx-background-color: #7da99e;
     -fx-background-radius: 7.5px;
     -fx-pref-width: 15px;
     -fx-min-width: 15px;
 }
 
 .scroll-bar:horizontal .thumb {
+    -fx-background-color: #7da99e;
     -fx-pref-height: 15px;
     -fx-min-height: 15px;
     -fx-background-radius: 7.5px;
@@ -108,14 +100,16 @@
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
     -fx-background-radius: 7.5px;
-    -fx-background-color: #e0e0e0;
+    -fx-background-color: #addacf;
 }
 
 .scroll-bar{
     -fx-background-radius: 7.5px;
+    -fx-background-color: #addacf;
 }
 .scroll-bar:horizontal{
     -fx-background-radius: 7.5px;
+    -fx-background-color: #addacf;
 }
 
 .scroll-pane > .viewport {
@@ -125,33 +119,40 @@
 
 /* table views */
 .table-view {
-    -fx-background-color: #f5f5f5;
+    -fx-background-color: #95c2b6;
     -fx-border-color: transparent;
-    -fx-selection-bar: red;
-    -fx-selection-bar-non-focused: salmon;
+    -fx-table-cell-border-color: transparent;
+    -fx-selection-bar: #72c0ac;
+    -fx-selection-bar-non-focused: #addacf;
 }
 
 .table-view .column-header {
-    -fx-background-color: #f5f5f5;
-    -fx-border-color: #d0d0d0;
+    -fx-background-color: #7da99e;
+    -fx-border-color: #659085;
     -fx-border-width: 0 0 1px 0;
     -fx-font-weight: bold;
     -fx-padding: 5px;
-    -fx-text-fill: #333333;
 }
 
 .table-view .table-cell {
-    -fx-border-color: #d0d0d0;
+    -fx-border-color: #7da99e;
     -fx-border-width: 0 1px 1px 0;
     -fx-padding: 5px;
-    -fx-background-color: #ffffff;
-    -fx-text-fill: #333333;
 }
 
-.table-view .table-row-cell:odd {
-    -fx-background-color: #f9f9f9;
+.table-view .table-row-cell {
+    -fx-background-color: #95c2b6;
 }
 
-.table-view .table-row-cell:even {
-    -fx-background-color: #ffffff;
+.table-view .table-row-cell:focused {
+    -fx-background-color: -fx-selection-bar;
 }
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: -fx-selection-bar-non-focused;
+}
+
+.table-view .table-row-cell:selected:focused {
+    -fx-background-color: -fx-selection-bar;
+}
+
