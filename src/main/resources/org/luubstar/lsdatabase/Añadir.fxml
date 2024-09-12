@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="807.0" styleClass="formpanel" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="565.0" prefWidth="807.0" styleClass="formpanel" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
@@ -28,7 +28,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="49.0" prefWidth="807.0" VBox.vgrow="NEVER">
          <children>
-            <Button fx:id="button_back" mnemonicParsing="false" onMouseReleased="#back" styleClass="actionbuttons" text="Volver">
+            <Button fx:id="button_back" mnemonicParsing="false" onMouseReleased="#back" styleClass="closebuttons" text="Volver">
                <HBox.margin>
                   <Insets right="100.0" />
                </HBox.margin>
@@ -52,7 +52,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="button_delete" mnemonicParsing="false" onMouseReleased="#delete" styleClass="actionbuttons" text="Eliminar">
+            <Button fx:id="button_delete" mnemonicParsing="false" onMouseReleased="#delete" styleClass="closebuttons" text="Eliminar">
                <HBox.margin>
                   <Insets left="100.0" />
                </HBox.margin>

@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -16,6 +18,8 @@ import java.util.function.UnaryOperator;
 
 public class GridUtils {
 
+
+    private static final Logger log = LoggerFactory.getLogger(GridUtils.class);
 
     static public Node getNodeByRowColumnIndex(GridPane grid, final int row, final int column) {
         for (Node node : grid.getChildren()) {
@@ -81,13 +85,17 @@ public class GridUtils {
 
         Button b = new Button("Seleccionar");
         b.setPrefSize(107, 25);
+        b.getStyleClass().add("actionbuttons");
+
+        Button x = new Button("X");
+        x.getStyleClass().add("closebuttons");
 
         grid.add(new Label("Cliente:"), 0, rowIndex);
         grid.add(tf, 1, rowIndex);
         grid.add(tf2, 2, rowIndex);
         grid.add(tf3, 3, rowIndex);
         grid.add(b, 4, rowIndex);
-        grid.add(new Button("X"), 5, rowIndex);
+        grid.add(x, 5, rowIndex);
 
         GridPane.setMargin(tf, new Insets(0, 5, 0, 5));
         GridPane.setMargin(tf2, new Insets(0, 10, 0, 10));
