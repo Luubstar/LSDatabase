@@ -23,6 +23,12 @@ public class DataFile {
             if (file.exists()) {
                 File dest = Zip.extractZip(path);
 
+                File[] files = dest.listFiles();
+
+                if (files.length == 1 && files[0].isDirectory()) {
+                    dest = files[0];
+                }
+
                 database = new File(dest.getAbsolutePath() + "/defaultBase.db");
                 data = new File(dest.getAbsolutePath() + "/data");
 
