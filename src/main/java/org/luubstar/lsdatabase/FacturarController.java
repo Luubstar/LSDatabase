@@ -141,6 +141,10 @@ public class FacturarController implements SidePanel {
         File selectedFile = fileChooser.showSaveDialog(button_save.getScene().getWindow());
 
         if (selectedFile != null) {
+            if (!selectedFile.getName().endsWith(".xlsx")){
+                selectedFile = new File(selectedFile.getPath() + ".xlsx");
+            }
+
             if(ExportExcel.exportExcel(Nombre.getValue(), Fecha.getValue(), String.valueOf(IVA.getValue()), String.valueOf(IRPF.getValue()), clientes, selectedFile)){
                 Popup.notify("Fichero creado correctamente");
             }
