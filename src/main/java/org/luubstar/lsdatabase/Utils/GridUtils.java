@@ -116,8 +116,8 @@ public class GridUtils {
                 .toList();
 
         for(int i = 2; i < (grid.getRowCount()-1); i++){
-            c.get(i).add(((TextField) sortedNodes.get(8 + ((i-2)*5) + 2)).getText());
-            c.get(i).add(((TextField) sortedNodes.get(8 + ((i-2)*5) + 3)).getText());
+            c.get(i).add(((TextField) sortedNodes.get(8 + ((i-2)*6) + 2)).getText());
+            c.get(i).add(((TextField) sortedNodes.get(8 + ((i-2)*6) + 3)).getText());
         }
     }
 }

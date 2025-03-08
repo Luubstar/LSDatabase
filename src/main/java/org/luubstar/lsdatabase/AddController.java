@@ -114,6 +114,7 @@ public class AddController implements SidePanel {
     }
 
     public void back(){
+        visualizarDatos(Database.actual, FXCollections.observableArrayList());
         clear();
         editing(false);
     }
