@@ -44,7 +44,8 @@ public class Updater {
 
 
         File oldFile = new File("App.jar");
-        if(!oldFile.delete()){logger.error("Fichero base no puede ser eliminado");}
+        if (!oldFile.exists()) {boolean ignored = new File("descargado.jar").renameTo(oldFile);}
+        else if(!oldFile.delete()){logger.error("Fichero base no puede ser eliminado");}
         else{
             boolean ignored = new File("descargado.jar").renameTo(oldFile);
         }
