@@ -61,7 +61,7 @@ public class Version {
 
         int[] intArray = new int[parts.length];
 
-        for (int i = 0; i < parts.length; i++) {intArray[i] = Integer.parseInt(parts[i]);}
+        for (int i = 0; i < parts.length; i++) {intArray[i] = Integer.parseInt(parts[i].replace("\n", ""));}
 
         return intArray;
     }

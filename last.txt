@@ -1,1 +1,1 @@
-/home/nbr/Programación/LSDatabase/mama.lsdata
+file.lsdata

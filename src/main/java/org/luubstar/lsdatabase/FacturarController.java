@@ -131,8 +131,6 @@ public class FacturarController implements SidePanel {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Guardar archivo");
-        fileChooser.setInitialDirectory(new File(new File(MainController.class.getProtectionDomain().getCodeSource().getLocation()
-                .toURI()).getPath()));
 
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Archivos de excel", "*.xlsx")
